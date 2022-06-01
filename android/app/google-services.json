@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "914379643539",
+    "project_id": "byteit-66ddb",
+    "storage_bucket": "byteit-66ddb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914379643539:android:a4af97f72d2b97e8320b66",
+        "android_client_info": {
+          "package_name": "com.byteit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914379643539-fkla7h89i5v122h7ashkul13ipbnli24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byteit",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "914379643539-r9m62tv7bga7mn9507h8mqke7fg79gk4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHCoxrNQm3toOgn1IFxlPJvTYpMy3eOP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914379643539-r9m62tv7bga7mn9507h8mqke7fg79gk4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

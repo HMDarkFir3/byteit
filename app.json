@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "byteit",
+    "slug": "byteit",
+    "version": "1.0.0",
+    "assetBundlePatterns": ["**/*"],
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ac0419"
+    },
+    "android": {
+      "googleServicesFile": "./android/app/google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ac0419"
+      }
+    },
+    "plugins": ["@react-native-firebase/app"]
+  }
+}
