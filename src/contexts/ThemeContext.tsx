@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Appearance } from "react-native";
 import { ThemeProvider, DefaultTheme } from "styled-components/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -21,13 +22,15 @@ export const ThemeContext = React.createContext({} as ThemeContextData);
 
 export const ThemesProvider = ({ children }: ThemeProviderProps) => {
   //<-- States -->
-  const [theme, setTheme] = useState<DefaultTheme>(light);
+  const [theme, setTheme] = useState<DefaultTheme>(dark);
+
+  const colorScheme = Appearance.getColorScheme();
 
   async function loadTheme() {
     const themeLocal = await AsyncStorage.getItem(COLLECTION_THEME);
 
     if (themeLocal === null) {
-      setTheme(light);
+      setTheme(colorScheme === "light" ? light : dark);
     } else {
       setTheme(themeLocal === "light" ? light : dark);
     }

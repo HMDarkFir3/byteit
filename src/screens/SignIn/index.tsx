@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
 import { LinearButton } from "../../components/Buttons/LinearButton";
-import { OAuthButton } from "../../components/OAuthButton";
+import { OAuthButton } from "../../components/Buttons/OAuthButton";
 
 import {
   Container,
@@ -35,7 +35,7 @@ import GithubWhiteLogoSVG from "../../assets/github-white.svg";
 import SlackLogoSVG from "../../assets/slack.svg";
 
 export const SignIn: FC = () => {
-  const { signIn, isLoading } = useAuth();
+  const { isLoading, signIn, signInWithGoogle } = useAuth();
   const { theme } = useCustomTheme();
   const { colors } = useTheme();
 
@@ -115,7 +115,7 @@ export const SignIn: FC = () => {
           </InputWrapper>
         </Form>
 
-        <ForgotPassword>Recuper senha</ForgotPassword>
+        <ForgotPassword>Recuperar senha</ForgotPassword>
 
         <ButtonContainer>
           <LinearButton
@@ -133,7 +133,7 @@ export const SignIn: FC = () => {
         </ContinueWithWrapper>
 
         <OAuthButtonWrapper>
-          <OAuthButton icon={GoogleLogoSVG} />
+          <OAuthButton icon={GoogleLogoSVG} onPress={signInWithGoogle} />
           <OAuthButton
             icon={
               theme.title === "light" ? GithubBlackLogoSVG : GithubWhiteLogoSVG

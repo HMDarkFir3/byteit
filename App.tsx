@@ -13,6 +13,7 @@ import "intl";
 import "intl/locale-data/jsonp/pt-BR";
 
 import { AuthProvider } from "./src/contexts/AuthContext";
+import { MenuProvider } from "./src/contexts/MenuContext";
 import { ThemesProvider } from "./src/contexts/ThemeContext";
 
 import { Routes } from "./src/routes";
@@ -32,12 +33,14 @@ export const App: FC = () => {
 
   return (
     <AuthProvider>
-      <ThemesProvider>
-        <PaperProvider>
-          <StatusBar style="light" />
-          <Routes />
-        </PaperProvider>
-      </ThemesProvider>
+      <MenuProvider>
+        <ThemesProvider>
+          <PaperProvider>
+            <StatusBar style="light" />
+            <Routes />
+          </PaperProvider>
+        </ThemesProvider>
+      </MenuProvider>
     </AuthProvider>
   );
 };

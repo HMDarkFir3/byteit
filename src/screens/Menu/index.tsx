@@ -1,9 +1,11 @@
-import React, { useState, useCallback, FC, useEffect } from "react";
-import { FlatList } from "react-native";
+import React, { useState, useEffect, useCallback, FC } from "react";
+import { FlatList, SectionList } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
+
+import { useMenu } from "../../hooks/useMenu";
 
 import { Skeletons } from "./Skeletons";
 import { Header } from "../../components/Header";
@@ -12,27 +14,42 @@ import { CategoryFood } from "../../components/CategoryFood";
 import { MenuCard } from "../../components/Cards/MenuCard";
 
 import { categoriesFoodType } from "../../utils/categoriesFoodType";
-import { plates } from "../../utils/categoriesFood";
 
 import { Container, CategoryFoodWrapper, MenuLabel } from "./styles";
 
+interface CategoryFoodTypeData {
+  id: string;
+  icon: any;
+  label: string;
+  type: "all" | "plate" | "drink";
+}
+
 export const Menu: FC = () => {
+  const { plates, drinks, isLoading, fetchMenu } = useMenu();
   const theme = useTheme();
 
-  const { navigate } = useNavigation();
+  const [selectedCategoryFood, setSelectedCategoryFood] = useState<
+    "all" | "plate" | "drink"
+  >("all");
 
-  const [selectedCategoryFood, setSelectedCategoryFood] = useState<string>("0");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const SECTIONS = [
+    {
+      title: "Pratos",
+      data: plates,
+    },
+    {
+      title: "Bebidas",
+      data: drinks,
+    },
+  ];
 
-  function handleCategoryFood(category: string) {
-    setSelectedCategoryFood(category);
+  function handleCategoryFood(type: "all" | "plate" | "drink") {
+    setSelectedCategoryFood(type);
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-  }, []);
+    fetchMenu(selectedCategoryFood);
+  }, [selectedCategoryFood]);
 
   useFocusEffect(
     useCallback(() => {
@@ -56,33 +73,70 @@ export const Menu: FC = () => {
       <Search />
 
       <CategoryFoodWrapper>
-        {categoriesFoodType.map((category) => (
+        {categoriesFoodType.map((category: CategoryFoodTypeData) => (
           <CategoryFood
             key={category.id}
             icon={category.icon}
             title={category.label}
-            isActive={selectedCategoryFood === category.id}
-            onPress={() => handleCategoryFood(category.id)}
+            isActive={selectedCategoryFood === category.type}
+            onPress={() => handleCategoryFood(category.type)}
           />
         ))}
       </CategoryFoodWrapper>
 
-      <MenuLabel>Pratos</MenuLabel>
+      {selectedCategoryFood === "all" && (
+        <SectionList
+          sections={SECTIONS}
+          keyExtractor={(item) => item.uid}
+          renderItem={({ item }) => <MenuCard data={item} />}
+          renderSectionHeader={({ section: { title } }) => (
+            <MenuLabel style={{ marginBottom: 24 }}>{title}</MenuLabel>
+          )}
+          contentContainerStyle={{
+            justifyContent: "space-between",
+            paddingBottom: 24,
+          }}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
 
-      <FlatList
-        data={plates}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <MenuCard data={item} />}
-        numColumns={2}
-        contentContainerStyle={{
-          paddingBottom: 24,
-        }}
-        columnWrapperStyle={{
-          justifyContent: "space-between",
-          marginTop: 24,
-        }}
-        showsVerticalScrollIndicator={false}
-      />
+      {selectedCategoryFood === "plate" && <MenuLabel>Pratos</MenuLabel>}
+
+      {selectedCategoryFood === "plate" && (
+        <FlatList
+          data={plates}
+          keyExtractor={(item) => item.uid}
+          renderItem={({ item }) => <MenuCard data={item} />}
+          numColumns={2}
+          contentContainerStyle={{
+            paddingBottom: 24,
+          }}
+          columnWrapperStyle={{
+            justifyContent: "space-between",
+            marginTop: 24,
+          }}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
+
+      {selectedCategoryFood === "drink" && <MenuLabel>Bebidas</MenuLabel>}
+
+      {selectedCategoryFood === "drink" && (
+        <FlatList
+          data={drinks}
+          keyExtractor={(item) => item.uid}
+          renderItem={({ item }) => <MenuCard data={item} />}
+          numColumns={2}
+          contentContainerStyle={{
+            paddingBottom: 24,
+          }}
+          columnWrapperStyle={{
+            justifyContent: "space-between",
+            marginTop: 24,
+          }}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </Container>
   );
 };

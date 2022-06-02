@@ -1,15 +1,18 @@
+import { PlatesDTO } from "../../dtos/PlatesDTO";
+
 export declare global {
   namespace ReactNavigation {
     interface RootParamList {
       Profile: undefined;
       MenuDetails: {
         details: {
-          title: string;
+          name: string;
           price: string;
           about: string;
           stars: number;
-          preparing: string;
+          preparing: number;
           image: string;
+          type: string;
         };
       };
     }

@@ -21,6 +21,8 @@ import {
   Star,
 } from "phosphor-react-native";
 
+import { MenuDTO } from "../../dtos/MenuDTO";
+
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
 import { Skeletons } from "./Skeletons";
@@ -49,14 +51,7 @@ import {
 import LogoSVG from "../../assets/logo-white.svg";
 
 interface Params {
-  details: {
-    title: string;
-    price: number;
-    about: string;
-    stars: number;
-    preparing: string;
-    image: string;
-  };
+  details: MenuDTO;
 }
 
 export const MenuDetails: FC = () => {
@@ -70,7 +65,6 @@ export const MenuDetails: FC = () => {
   const [toggleSalad, setToggleSalad] = useState<boolean>(true);
   const [toggleFriesPotato, setToggleFriesPotato] = useState<boolean>(true);
   const [toggleSoutePotato, setToggleSoutePotato] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   function handleGoBack() {
     goBack();
@@ -189,12 +183,6 @@ export const MenuDetails: FC = () => {
     []
   );
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-  }, []);
-
   useFocusEffect(
     useCallback(() => {
       NavigationBar.setBackgroundColorAsync(colors.navigation_bar.color);
@@ -204,10 +192,6 @@ export const MenuDetails: FC = () => {
       );
     }, [theme.title])
   );
-
-  if (isLoading) {
-    return <Skeletons />;
-  }
 
   return (
     <Container>
@@ -222,7 +206,7 @@ export const MenuDetails: FC = () => {
             />
           </TouchableOpacity>
 
-          <LogoSVG width={146} height={96} />
+          <LogoSVG width={106} height={96} />
 
           <TouchableOpacity activeOpacity={0.7} onPress={toggleFavoriteMenu}>
             <Heart
@@ -246,11 +230,14 @@ export const MenuDetails: FC = () => {
         onScroll={scrollHandler}
         style={contentHeightStyle}
       >
-        <Title>{details.title}</Title>
+        <Title>{details.name}</Title>
 
         <InfoWrapper>
           <InfoContent>
-            <InfoCard icon={ClockCounterClockwise} title={details.preparing} />
+            <InfoCard
+              icon={ClockCounterClockwise}
+              title={`${String(details.preparing)}m`}
+            />
             <InfoCard icon={Star} title={details.stars} />
           </InfoContent>
 
@@ -263,44 +250,46 @@ export const MenuDetails: FC = () => {
           <Description>{details.about}</Description>
         </AboutWrapper>
 
-        <Accompaniment>
-          <AccompanimentTypeCard
-            title="Vai uma salada?"
-            subtitle="Assinale caso queira"
-          />
-
-          <AccompanimentSelectCard
-            imageUri="https://i.imgur.com/aXz5DLM.png"
-            title="Salada"
-            menu="Alface, tomate e cebola"
-            isActive={toggleSalad}
-            onPress={toggleAccompanimentSalad}
-            style={accompanimentSelecteCardStyle}
-          />
-
-          <Animated.View
-            style={[{ marginBottom: 120 }, accompanimentTypeCardStyle]}
-          >
+        {details.type === "plate" && (
+          <Accompaniment>
             <AccompanimentTypeCard
-              title="Escolha sua batata"
+              title="Vai uma salada?"
               subtitle="Assinale caso queira"
             />
 
             <AccompanimentSelectCard
-              imageUri="https://i.imgur.com/Vhkol3Q.png"
-              title="Fritas"
-              isActive={toggleFriesPotato}
-              onPress={toggleAccompanimentFriesPotato}
+              imageUri="https://i.imgur.com/aXz5DLM.png"
+              title="Salada"
+              menu="Alface, tomate e cebola"
+              isActive={toggleSalad}
+              onPress={toggleAccompanimentSalad}
+              style={accompanimentSelecteCardStyle}
             />
 
-            <AccompanimentSelectCard
-              imageUri="https://i.imgur.com/RtRaWUh.png"
-              title="Souté"
-              isActive={toggleSoutePotato}
-              onPress={toggleAccompanimentSoutePotato}
-            />
-          </Animated.View>
-        </Accompaniment>
+            <Animated.View
+              style={[{ marginBottom: 120 }, accompanimentTypeCardStyle]}
+            >
+              <AccompanimentTypeCard
+                title="Escolha sua batata"
+                subtitle="Assinale caso queira"
+              />
+
+              <AccompanimentSelectCard
+                imageUri="https://i.imgur.com/Vhkol3Q.png"
+                title="Fritas"
+                isActive={toggleFriesPotato}
+                onPress={toggleAccompanimentFriesPotato}
+              />
+
+              <AccompanimentSelectCard
+                imageUri="https://i.imgur.com/RtRaWUh.png"
+                title="Souté"
+                isActive={toggleSoutePotato}
+                onPress={toggleAccompanimentSoutePotato}
+              />
+            </Animated.View>
+          </Accompaniment>
+        )}
       </Content>
 
       <ButtonContainer>

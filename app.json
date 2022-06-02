@@ -1,8 +1,12 @@
 {
   "expo": {
     "name": "byteit",
+    "currentFullName": "byteit",
+    "originalFullName": "byteit",
     "slug": "byteit",
+    "scheme": "byteit",
     "version": "1.0.0",
+    "sdkVersion": "45.0.0",
     "assetBundlePatterns": ["**/*"],
     "icon": "./assets/icon.png",
     "splash": {

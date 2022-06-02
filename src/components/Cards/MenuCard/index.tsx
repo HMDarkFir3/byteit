@@ -3,22 +3,16 @@ import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { Plus } from "phosphor-react-native";
 
+import { MenuDTO } from "../../../dtos/MenuDTO";
+
 import { Container, Image, Title, Price, Button } from "./styles";
 
 interface Props {
-  data: {
-    id: string;
-    title: string;
-    price: number;
-    about: string;
-    stars: number;
-    preparing: string;
-    image: string;
-  };
+  data: MenuDTO;
 }
 
 export const MenuCard: FC<Props> = (props) => {
-  const { title, price, image, about, preparing, stars } = props.data;
+  const { name, price, image, about, preparing, stars, type } = props.data;
 
   const { navigate } = useNavigation();
   const { colors } = useTheme();
@@ -30,7 +24,15 @@ export const MenuCard: FC<Props> = (props) => {
 
   function handleCard() {
     navigate("MenuDetails", {
-      details: { title, price: formattedPrice, image, about, preparing, stars },
+      details: {
+        name,
+        price: formattedPrice,
+        image,
+        about,
+        preparing,
+        stars,
+        type,
+      },
     });
   }
 
@@ -38,7 +40,7 @@ export const MenuCard: FC<Props> = (props) => {
     <Container activeOpacity={0.7} onPress={handleCard}>
       <Image source={{ uri: image }} />
 
-      <Title>{title}</Title>
+      <Title>{name}</Title>
 
       <Price>{formattedPrice}</Price>
 

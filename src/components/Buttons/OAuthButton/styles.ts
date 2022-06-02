@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components/native";
+import { TouchableOpacity } from "react-native";
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
   align-items: center;
   justify-content: center;
 

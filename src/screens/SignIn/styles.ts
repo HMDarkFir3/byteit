@@ -80,7 +80,7 @@ export const Input = styled.TextInput`
 `;
 
 export const ForgotPassword = styled.Text`
-  margin-top: 24px;
+  margin-top: 12px;
   margin-right: 24px;
 
   text-align: right;
