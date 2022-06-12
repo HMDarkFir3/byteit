@@ -1,14 +1,23 @@
 import React, { useState, useCallback, FC } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Alert } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
+import firestore from "@react-native-firebase/firestore";
+import storage from "@react-native-firebase/storage";
+import { translationFirebaseErrorsPTBR } from "react-translation-firebase-errors";
 import { CaretLeft, Check } from "phosphor-react-native";
+
+import { UserDTO } from "../../dtos/UserDTO";
+
+import { COLLECTION_USER } from "../../storages";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
+import { Skeletons } from "./Skeleton";
 import { Input } from "../../components/Inputs/Input";
 import { GradientText } from "../../components/GradientText";
 import { UserColorButton } from "../../components/Buttons/UserColorButton";
@@ -26,12 +35,10 @@ import {
   Username,
   Email,
   Content,
-  ButtonUserColors,
-  GradientUserColor,
 } from "./styles";
 
 export const UpdateProfile: FC = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const { goBack } = useNavigation();
   const { theme } = useCustomTheme();
   const { colors } = useTheme();
@@ -40,6 +47,7 @@ export const UpdateProfile: FC = () => {
   const [isActiveUserColor, setIsActiveUserColor] = useState<string[]>(
     user.user_color
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handleGoBack() {
     goBack();
@@ -47,8 +55,56 @@ export const UpdateProfile: FC = () => {
 
   function handleSelectedUserColor(userColor: string[]) {
     setIsActiveUserColor(userColor);
+  }
 
-    console.log(userColor);
+  async function handleSaveProfile() {
+    setIsLoading(true);
+
+    await firestore()
+      .collection("users")
+      .doc(user.uid)
+      .update({
+        name: name,
+        user_color: isActiveUserColor,
+      })
+      .then(async () => {
+        await firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then(async (profile) => {
+            if (profile.exists) {
+              const { name, email, has_image, user_color } =
+                profile.data() as UserDTO;
+
+              const reference = storage().ref(
+                `/users/${has_image ? user.uid : "empty_user"}.png`
+              );
+
+              const imageUrl = await reference.getDownloadURL();
+
+              const data: UserDTO = {
+                uid: user.uid,
+                name,
+                email,
+                image: imageUrl,
+                user_color,
+              };
+
+              setUser(data);
+
+              await AsyncStorage.removeItem(COLLECTION_USER);
+              await AsyncStorage.setItem(COLLECTION_USER, JSON.stringify(data));
+            }
+          })
+          .catch((err) => {
+            const error = translationFirebaseErrorsPTBR(err.code);
+            Alert.alert(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      });
   }
 
   useFocusEffect(
@@ -60,6 +116,10 @@ export const UpdateProfile: FC = () => {
       );
     }, [theme.title])
   );
+
+  if (isLoading) {
+    return <Skeletons />;
+  }
 
   return (
     <Container>
@@ -79,7 +139,7 @@ export const UpdateProfile: FC = () => {
           <CaretLeft color={colors.screens.update_profile.icon} size={28} />
         </CaretLeftButton>
 
-        <CheckButton activeOpacity={0.7}>
+        <CheckButton activeOpacity={0.7} onPress={handleSaveProfile}>
           <Check color={colors.screens.update_profile.icon} size={28} />
         </CheckButton>
 

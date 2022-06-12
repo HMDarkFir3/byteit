@@ -7,7 +7,7 @@ interface ButtonUserColorsProps {
 }
 
 export const Container = styled(TouchableOpacity)<ButtonUserColorsProps>`
-  margin-right: 32px;
+  margin-right: 24px;
 
   ${({ isActive }) =>
     isActive

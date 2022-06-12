@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const Skeleton: FC<Props> = (props) => {
-  const { width, height, borderRadius } = props;
+  const { width, height, borderRadius, ...rest } = props;
 
   const animatedValue = new Animated.Value(0);
 
@@ -32,7 +32,12 @@ export const Skeleton: FC<Props> = (props) => {
   });
 
   return (
-    <Container width={width} height={height} borderRadius={borderRadius}>
+    <Container
+      width={width}
+      height={height}
+      borderRadius={borderRadius}
+      {...rest}
+    >
       <SkeletonAnimation style={{ transform: [{ translateX: translateX }] }} />
     </Container>
   );

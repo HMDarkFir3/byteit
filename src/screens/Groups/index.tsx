@@ -23,7 +23,7 @@ export const Groups: FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false);
+      setIsLoading(true);
     }, 1000);
   }, []);
 

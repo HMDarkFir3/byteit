@@ -4,6 +4,8 @@ import React, {
   useEffect,
   FC,
   ReactNode,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,6 +20,7 @@ import { UserDTO } from "../dtos/UserDTO";
 
 interface AuthContextData {
   user: UserDTO;
+  setUser: Dispatch<SetStateAction<UserDTO>>;
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -74,7 +77,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
               const imageUrl = await reference.getDownloadURL();
 
-              const data = {
+              const data: UserDTO = {
                 uid: account.user.uid,
                 name,
                 email,
@@ -114,7 +117,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, setUser, isLoading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -52,7 +52,7 @@ export const light = {
         placeholder: "#868a99",
       },
       update_profile: {
-        background: "#1A1D23",
+        background: "#ffffff",
 
         icon: "#ac0419",
 
@@ -76,10 +76,6 @@ export const light = {
       },
       linear_button: {
         title: "#ffffff",
-      },
-      o_auth_button: {
-        background: "#F2F4F8",
-        border: "#676567",
       },
       category_food: {
         inactive: ["#f2f4f8", "#f2f4f8"],

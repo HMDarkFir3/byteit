@@ -95,23 +95,3 @@ export const Email = styled.Text`
 export const Content = styled.View`
   margin-top: 36px;
 `;
-
-export const ButtonUserColors = styled(TouchableOpacity)<ButtonUserColorsProps>`
-  margin-right: 32px;
-
-  ${({ isActive }) =>
-    isActive
-      ? css`
-          opacity: 1;
-        `
-      : css`
-          opacity: 0.5;
-        `}
-`;
-
-export const GradientUserColor = styled(LinearGradient)`
-  width: 48px;
-  height: 48px;
-
-  border-radius: 24px;
-`;

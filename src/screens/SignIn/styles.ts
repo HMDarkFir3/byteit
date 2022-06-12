@@ -95,4 +95,8 @@ export const ButtonContainer = styled.View`
 
   margin-top: 28px;
   padding: 0 24px 24px 24px;
+
+  background-color: ${({ theme: { colors, fonts } }) => css`
+    background-color: ${colors.screens.sign_in.background};
+  `};
 `;
