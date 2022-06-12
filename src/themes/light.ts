@@ -46,11 +46,17 @@ export const light = {
       profile: {
         background: "#ffffff",
 
-        image_border: "#ac0419",
         edit_icon: "#ac0419",
 
         title: "#2E3243",
-        description: "#ac0419",
+        placeholder: "#868a99",
+      },
+      update_profile: {
+        background: "#1A1D23",
+
+        icon: "#ac0419",
+
+        title: "#2E3243",
         placeholder: "#868a99",
       },
     },
@@ -123,6 +129,12 @@ export const light = {
       },
       settings_card: {
         title: "#2E3243",
+      },
+      input: {
+        background: "#F2F4F8",
+        border: "#868A99",
+        text: "#2E3243",
+        placeholder: "#868A99",
       },
     },
 

@@ -45,13 +45,19 @@ export const dark = {
         label: "#ffffff",
       },
       profile: {
-        background: "#1A1D23",
+        background: "#111418",
 
-        image_border: "#ac0419",
         edit_icon: "#ffffff",
 
         title: "#ffffff",
-        description: "#ac0419",
+        placeholder: "#868a99",
+      },
+      update_profile: {
+        background: "#111418",
+
+        icon: "#ffffff",
+
+        title: "#ffffff",
         placeholder: "#868a99",
       },
     },
@@ -126,6 +132,12 @@ export const dark = {
       },
       settings_card: {
         title: "#ffffff",
+      },
+      input: {
+        background: "#1A1D23",
+        border: "#414958",
+        text: "#ffffff",
+        placeholder: "#868a99",
       },
     },
 

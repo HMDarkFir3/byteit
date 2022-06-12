@@ -3,13 +3,17 @@ import { TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
+interface ButtonUserColorsProps {
+  isActive: boolean;
+}
+
 export const Container = styled.View`
   flex: 1;
 
   padding: 0 24px;
 
   background-color: ${({ theme: { colors } }) =>
-    colors.screens.profile.background};
+    colors.screens.update_profile.background};
 `;
 
 export const Header = styled.View`
@@ -39,7 +43,7 @@ export const ImageWrapper = styled.View`
   border-radius: 90px;
 
   ${({ theme: { colors } }) => css`
-    background-color: ${colors.screens.profile.background};
+    background-color: ${colors.screens.update_profile.background};
   `}
 `;
 
@@ -50,7 +54,13 @@ export const Image = styled.Image`
   border-radius: 92px;
 `;
 
-export const EditButton = styled(TouchableOpacity)`
+export const CaretLeftButton = styled(TouchableOpacity)`
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+export const CheckButton = styled(TouchableOpacity)`
   position: absolute;
   top: 0;
   right: 0;
@@ -65,7 +75,7 @@ export const Username = styled.Text`
 
   ${({ theme: { colors, fonts } }) => css`
     font-family: ${fonts.medium};
-    color: ${colors.screens.profile.title};
+    color: ${colors.screens.update_profile.title};
   `}
 `;
 
@@ -78,10 +88,30 @@ export const Email = styled.Text`
 
   ${({ theme: { colors, fonts } }) => css`
     font-family: ${fonts.regular};
-    color: ${colors.screens.profile.placeholder};
+    color: ${colors.screens.update_profile.placeholder};
   `}
 `;
 
-export const Content = styled.ScrollView`
-  margin-top: 28px;
+export const Content = styled.View`
+  margin-top: 36px;
+`;
+
+export const ButtonUserColors = styled(TouchableOpacity)<ButtonUserColorsProps>`
+  margin-right: 32px;
+
+  ${({ isActive }) =>
+    isActive
+      ? css`
+          opacity: 1;
+        `
+      : css`
+          opacity: 0.5;
+        `}
+`;
+
+export const GradientUserColor = styled(LinearGradient)`
+  width: 48px;
+  height: 48px;
+
+  border-radius: 24px;
 `;

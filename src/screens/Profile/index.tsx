@@ -1,7 +1,7 @@
 import React, { useState, useCallback, FC } from "react";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
 
-import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
@@ -37,10 +37,15 @@ import {
 
 export const Profile: FC = () => {
   const { user, signOut } = useAuth();
+  const { navigate } = useNavigation();
   const { theme, toggleTheme } = useCustomTheme();
   const { colors } = useTheme();
 
   const [isSwitchTheme, setIsSwitchTheme] = useState<boolean>(false);
+
+  function handleUpdateProfile() {
+    navigate("UpdateProfile");
+  }
 
   function handleToggleSwitch() {
     setIsSwitchTheme(!isSwitchTheme);
@@ -84,8 +89,8 @@ export const Profile: FC = () => {
           </ImageWrapper>
         </ImageBorder>
 
-        <EditButton>
-          <NotePencil color={colors.screens.profile.edit_icon} size={32} />
+        <EditButton activeOpacity={0.7} onPress={handleUpdateProfile}>
+          <NotePencil color={colors.screens.profile.edit_icon} size={28} />
         </EditButton>
 
         <Username>{user.name}</Username>

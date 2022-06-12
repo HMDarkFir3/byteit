@@ -15,6 +15,7 @@ export declare global {
           type: string;
         };
       };
+      UpdateProfile: undefined;
     }
   }
 }
