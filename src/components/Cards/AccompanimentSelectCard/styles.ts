@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import Animated from "react-native-reanimated";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface ButtonProps {
   isActive: boolean;
@@ -55,22 +56,32 @@ export const Menu = styled.Text`
 export const Button = styled.View<ButtonProps>`
   align-items: center;
   justify-content: center;
+`;
+
+export const Gradient = styled(LinearGradient)`
+  align-items: center;
+  justify-content: center;
 
   width: 32px;
   height: 32px;
 
   border-radius: 16px;
+`;
 
-  ${({ theme: { colors }, isActive }) =>
-    isActive
-      ? css`
-          background-color: ${colors.components.accompaniment_select_card
-            .active};
-          border: solid 8px
-            ${colors.components.accompaniment_select_card.border};
-        `
-      : css`
-          background-color: ${colors.components.accompaniment_select_card
-            .inactive};
-        `}
+export const GradientFill = styled.View`
+  width: 16px;
+  height: 16px;
+
+  background-color: ${({ theme: { colors } }) =>
+    colors.components.accompaniment_select_card.inactive};
+  border-radius: 8px;
+`;
+
+export const InactiveFill = styled.View`
+  width: 32px;
+  height: 32px;
+
+  background-color: ${({ theme: { colors } }) =>
+    colors.components.accompaniment_select_card.inactive};
+  border-radius: 16px;
 `;

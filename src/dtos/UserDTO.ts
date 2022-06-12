@@ -4,5 +4,5 @@ export interface UserDTO {
   email: string;
   image?: string | null;
   has_image?: boolean;
-  user_color: string;
+  user_color: string[];
 }

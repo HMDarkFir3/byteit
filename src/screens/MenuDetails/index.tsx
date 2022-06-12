@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, FC } from "react";
+import React, { useState, useCallback, FC } from "react";
 import { TouchableOpacity } from "react-native";
 import {
   useNavigation,
@@ -23,13 +23,14 @@ import {
 
 import { MenuDTO } from "../../dtos/MenuDTO";
 
+import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
-import { Skeletons } from "./Skeletons";
+// import { Skeletons } from "./Skeletons";
 import { InfoCard } from "../../components/Cards/InfoCard";
 import { AccompanimentTypeCard } from "../../components/Cards/AcompanimentTypeCard";
 import { AccompanimentSelectCard } from "../../components/Cards/AccompanimentSelectCard";
-import { Button } from "../../components/Buttons/Button";
+import { LinearButton } from "../../components/Buttons/LinearButton";
 
 import {
   Container,
@@ -55,6 +56,7 @@ interface Params {
 }
 
 export const MenuDetails: FC = () => {
+  const { user } = useAuth();
   const { goBack } = useNavigation();
   const route = useRoute();
   const { details } = route.params as Params;
@@ -194,10 +196,19 @@ export const MenuDetails: FC = () => {
   );
 
   return (
-    <Container>
+    <Container
+      colors={user.user_color}
+      start={{ x: 0, y: 1 }}
+      end={{ x: 1, y: 1 }}
+    >
       <StatusBar style="light" />
 
-      <Header style={headerHeightStyle}>
+      <Header
+        style={headerHeightStyle}
+        colors={user.user_color}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 1 }}
+      >
         <SubHeader>
           <TouchableOpacity activeOpacity={0.7} onPress={handleGoBack}>
             <CaretLeft
@@ -293,7 +304,7 @@ export const MenuDetails: FC = () => {
       </Content>
 
       <ButtonContainer>
-        <Button title="Adicionar ao pedido" />
+        <LinearButton title="Adicionar ao pedido" />
       </ButtonContainer>
     </Container>
   );

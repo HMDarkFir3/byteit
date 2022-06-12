@@ -1,4 +1,4 @@
-package com.byteit.newarchitecture.modules;
+package com.hmdarkfire.byteit.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

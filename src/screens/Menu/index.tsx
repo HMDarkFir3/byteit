@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback, FC } from "react";
 import { FlatList, SectionList } from "react-native";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
+import { LinearTextGradient } from "react-native-text-gradient";
 
 import { useMenu } from "../../hooks/useMenu";
 

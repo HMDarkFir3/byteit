@@ -16,16 +16,6 @@ export const CountGroupWrapper = styled.View`
   margin-bottom: 20px;
 `;
 
-export const Count = styled.Text`
-  font-size: 20px;
-  line-height: 24px;
-
-  ${({ theme: { colors, fonts } }) => css`
-    font-family: ${fonts.semi_bold};
-    color: ${colors.screens.groups.count};
-  `}
-`;
-
 export const GroupLabel = styled.Text`
   margin-left: 6px;
 

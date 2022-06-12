@@ -36,13 +36,11 @@ export const light = {
       demands: {
         background: "#ffffff",
 
-        count: "#ac0419",
         label: "#2E3243",
       },
       groups: {
         background: "#ffffff",
 
-        count: "#ac0419",
         label: "#2E3243",
       },
       profile: {
@@ -71,7 +69,6 @@ export const light = {
         title: "#ffffff",
       },
       linear_button: {
-        background: ["#E76F00", "#EA374E"],
         title: "#ffffff",
       },
       o_auth_button: {
@@ -79,10 +76,7 @@ export const light = {
         border: "#676567",
       },
       category_food: {
-        active: "#ac0419",
-        inactive: "#f2f4f8",
-
-        active_title: "#ac0419",
+        inactive: ["#f2f4f8", "#f2f4f8"],
         inactive_title: "#868a99",
       },
       menu_card: {
@@ -91,11 +85,9 @@ export const light = {
         title: "#2E3243",
         price: "#faaa31",
 
-        add_button: "#ac0419",
         color_button: "#ffffff",
       },
       info_card: {
-        background: "#ac0419",
         title: "#ffffff",
       },
       accompaniment_type_card: {
@@ -105,7 +97,6 @@ export const light = {
         placeholder: "#868a99",
       },
       accompaniment_select_card: {
-        active: "#ffffff",
         inactive: "#f2f4f8",
         border: "#ac0419",
 
@@ -117,9 +108,8 @@ export const light = {
 
         title: "#2E3243",
         price: "#faaa31",
-        count: "#ac0419",
-        count_button: "#ffffff",
-        count_icon: "#2E3243",
+        count: "#2E3243",
+        count_icon: "#ffffff",
 
         border: "#D9D9D9",
       },

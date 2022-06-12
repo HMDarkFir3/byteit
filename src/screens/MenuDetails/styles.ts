@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components/native";
 import Animated from "react-native-reanimated";
+import { LinearGradient } from "expo-linear-gradient";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
-export const Container = styled.View`
-  flex: 1;
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
-  background-color: ${({ theme: { colors } }) =>
-    colors.screens.menu_details.primary};
+export const Container = styled(LinearGradient)`
+  flex: 1;
 `;
 
-export const Header = styled(Animated.View)`
+export const Header = styled(AnimatedLinearGradient)`
   padding: 0 24px;
 
   background-color: ${({ theme: { colors } }) =>

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components/native";
 import { Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export const Container = styled(TouchableOpacity)`
   align-items: center;
@@ -52,13 +53,15 @@ export const Button = styled.View`
   position: absolute;
   bottom: -8px;
 
+  border-radius: 16px;
+`;
+
+export const Gradient = styled(LinearGradient)`
   align-items: center;
   justify-content: center;
 
   width: 32px;
   height: 32px;
 
-  background-color: ${({ theme: { colors } }) =>
-    colors.components.menu_card.add_button};
   border-radius: 16px;
 `;

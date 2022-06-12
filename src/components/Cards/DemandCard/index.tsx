@@ -2,6 +2,8 @@ import React, { useState, FC } from "react";
 import { useTheme } from "styled-components/native";
 import { Plus, Minus } from "phosphor-react-native";
 
+import { useAuth } from "../../../hooks/useAuth";
+
 import {
   Container,
   Image,
@@ -10,6 +12,7 @@ import {
   Price,
   ButtonWrapper,
   Button,
+  Gradient,
   Count,
 } from "./styles";
 
@@ -25,6 +28,7 @@ interface Props {
 export const DemandCard: FC<Props> = (props) => {
   const { title, price, image } = props.data;
 
+  const { user } = useAuth();
   const { colors } = useTheme();
 
   const [count, setCount] = useState<number>(1);
@@ -56,13 +60,25 @@ export const DemandCard: FC<Props> = (props) => {
 
       <ButtonWrapper>
         <Button activeOpacity={0.7} onPress={handlePlus}>
-          <Plus color={colors.components.demand_card.count_icon} size={16} />
+          <Gradient
+            colors={user.user_color}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Plus color={colors.components.demand_card.count_icon} size={16} />
+          </Gradient>
         </Button>
 
         <Count>{count}</Count>
 
         <Button activeOpacity={0.7} onPress={handleMinus}>
-          <Minus color={colors.components.demand_card.count_icon} size={16} />
+          <Gradient
+            colors={user.user_color}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Minus color={colors.components.demand_card.count_icon} size={16} />
+          </Gradient>
         </Button>
       </ButtonWrapper>
     </Container>

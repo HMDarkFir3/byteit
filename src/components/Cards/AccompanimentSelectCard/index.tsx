@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 
+import { useAuth } from "../../../hooks/useAuth";
+
 import {
   Container,
   Wrapper,
@@ -9,6 +11,9 @@ import {
   Title,
   Menu,
   Button,
+  Gradient,
+  GradientFill,
+  InactiveFill,
 } from "./styles";
 
 interface Props extends TouchableOpacityProps {
@@ -24,6 +29,8 @@ interface Props extends TouchableOpacityProps {
 export const AccompanimentSelectCard: FC<Props> = (props) => {
   const { imageUri, title, menu, isActive, style, ...rest } = props;
 
+  const { user } = useAuth();
+
   return (
     <TouchableOpacity activeOpacity={0.7} {...rest}>
       <Container style={style}>
@@ -36,7 +43,19 @@ export const AccompanimentSelectCard: FC<Props> = (props) => {
           </MenuWrapper>
         </Wrapper>
 
-        <Button isActive={isActive} />
+        <Button isActive={isActive}>
+          {isActive ? (
+            <Gradient
+              colors={user.user_color}
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 1 }}
+            >
+              <GradientFill />
+            </Gradient>
+          ) : (
+            <InactiveFill />
+          )}
+        </Button>
       </Container>
     </TouchableOpacity>
   );

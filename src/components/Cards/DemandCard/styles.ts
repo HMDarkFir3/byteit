@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import { TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export const Container = styled.View`
   flex-direction: row;
@@ -64,17 +65,19 @@ export const ButtonWrapper = styled.View`
 `;
 
 export const Button = styled(TouchableOpacity)`
+  border-radius: 12px;
+
+  elevation: 5;
+`;
+
+export const Gradient = styled(LinearGradient)`
   align-items: center;
   justify-content: center;
 
   width: 24px;
   height: 24px;
 
-  background-color: ${({ theme: { colors } }) =>
-    colors.components.demand_card.count_button};
   border-radius: 12px;
-
-  elevation: 5;
 `;
 
 export const Count = styled.Text`

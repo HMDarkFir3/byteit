@@ -7,11 +7,12 @@ import * as NavigationBar from "expo-navigation-bar";
 
 import { Skeletons } from "./Skeletons";
 import { Header } from "../../components/Header";
+import { GradientText } from "../../components/GradientText";
 import { GroupCard } from "../../components/Cards/GroupCard";
 
 import { groups } from "../../utils/groups";
 
-import { Container, CountGroupWrapper, Count, GroupLabel } from "./styles";
+import { Container, CountGroupWrapper, GroupLabel } from "./styles";
 
 export const Groups: FC = () => {
   const theme = useTheme();
@@ -23,7 +24,7 @@ export const Groups: FC = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 5000);
+    }, 1000);
   }, []);
 
   useFocusEffect(
@@ -46,7 +47,7 @@ export const Groups: FC = () => {
       <Header title="Grupos" />
 
       <CountGroupWrapper>
-        <Count>{activeGroups}</Count>
+        <GradientText title={String(activeGroups)} />
         <GroupLabel>Grupos ativos</GroupLabel>
       </CountGroupWrapper>
 

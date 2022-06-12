@@ -1,13 +1,6 @@
 import styled, { css } from "styled-components/native";
+import { LinearGradient } from "expo-linear-gradient";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
-
-interface ImageWrapperProps {
-  borderColor: string;
-}
-
-interface TitleProps {
-  color: string;
-}
 
 export const Container = styled.View`
   flex: 1;
@@ -25,7 +18,7 @@ export const Header = styled.View`
   margin-top: ${getStatusBarHeight() + 24}px;
 `;
 
-export const ImageWrapper = styled.View<ImageWrapperProps>`
+export const ImageBorder = styled(LinearGradient)`
   align-items: center;
   justify-content: center;
 
@@ -33,10 +26,19 @@ export const ImageWrapper = styled.View<ImageWrapperProps>`
   height: 184px;
 
   border-radius: 92px;
+`;
 
-  ${({ theme: { colors }, borderColor }) => css`
+export const ImageWrapper = styled.View`
+  align-items: center;
+  justify-content: center;
+
+  width: 168px;
+  height: 168px;
+
+  border-radius: 90px;
+
+  ${({ theme: { colors } }) => css`
     background-color: ${colors.screens.profile.background};
-    border: solid 8px ${borderColor};
   `}
 `;
 
@@ -81,16 +83,4 @@ export const Email = styled.Text`
 
 export const Content = styled.ScrollView`
   margin-top: 28px;
-`;
-
-export const Title = styled.Text<TitleProps>`
-  margin-bottom: 12px;
-
-  font-size: 20px;
-  line-height: 24px;
-
-  ${({ theme: { fonts }, color }) => css`
-    font-family: ${fonts.medium};
-    color: ${color};
-  `}
 `;

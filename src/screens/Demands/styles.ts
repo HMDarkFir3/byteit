@@ -24,16 +24,6 @@ export const CountDemandWrapper = styled.View`
   align-items: center;
 `;
 
-export const Count = styled.Text`
-  font-size: 20px;
-  line-height: 24px;
-
-  ${({ theme: { colors, fonts } }) => css`
-    font-family: ${fonts.semi_bold};
-    color: ${colors.screens.demands.count};
-  `}
-`;
-
 export const DemandLabel = styled.Text`
   margin-left: 6px;
 

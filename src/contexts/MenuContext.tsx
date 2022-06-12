@@ -12,6 +12,8 @@ import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import { translationFirebaseErrorsPTBR } from "react-translation-firebase-errors";
 
+import { useAuth } from "../hooks/useAuth";
+
 import { MenuDTO } from "../dtos/MenuDTO";
 
 interface MenuContextData {
@@ -28,6 +30,8 @@ interface MenuProviderProps {
 export const MenuContext = createContext({} as MenuContextData);
 
 export const MenuProvider: FC<MenuProviderProps> = ({ children }) => {
+  const { user } = useAuth();
+
   const [plates, setPlates] = useState<MenuDTO[]>([]);
   const [drinks, setDrinks] = useState<MenuDTO[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,8 +39,6 @@ export const MenuProvider: FC<MenuProviderProps> = ({ children }) => {
   async function fetchPlates() {
     setIsLoading(true);
     setPlates([]);
-
-    const user = auth().currentUser;
 
     if (user.uid) {
       await firestore()
@@ -70,8 +72,6 @@ export const MenuProvider: FC<MenuProviderProps> = ({ children }) => {
   async function fetchDrinks() {
     setIsLoading(true);
     setDrinks([]);
-
-    const user = auth().currentUser;
 
     if (user.uid) {
       await firestore()

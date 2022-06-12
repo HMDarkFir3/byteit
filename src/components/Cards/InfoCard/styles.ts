@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components/native";
+import { LinearGradient } from "expo-linear-gradient";
 
-export const Container = styled.View`
+export const Container = styled(LinearGradient)`
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -8,9 +9,7 @@ export const Container = styled.View`
   margin-right: 16px;
   padding: 4px 8px;
 
-  background-color: ${({ theme: { colors } }) =>
-    colors.components.info_card.background};
-  border-radius: 8px;
+  border-radius: 16px;
 `;
 
 export const Title = styled.Text`

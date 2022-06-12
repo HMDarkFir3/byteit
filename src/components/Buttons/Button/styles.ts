@@ -10,7 +10,7 @@ export const Container = styled.View`
 
   background-color: ${({ theme: { colors } }) =>
     colors.components.button.background};
-  border-radius: 24px;
+  border-radius: 16px;
 `;
 
 export const Title = styled.Text`

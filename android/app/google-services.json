@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:914379643539:android:a4af97f72d2b97e8320b66",
+        "mobilesdk_app_id": "1:914379643539:android:ed4f682dc198444e320b66",
         "android_client_info": {
-          "package_name": "com.byteit"
+          "package_name": "com.hmdarkfire.byteit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "914379643539-fkla7h89i5v122h7ashkul13ipbnli24.apps.googleusercontent.com",
+          "client_id": "914379643539-56ustck6ogac3jtjfsobghi82j73gph4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.byteit",
+            "package_name": "com.hmdarkfire.byteit",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },

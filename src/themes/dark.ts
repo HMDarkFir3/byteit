@@ -37,13 +37,11 @@ export const dark = {
       demands: {
         background: "#1A1D23",
 
-        count: "#ac0419",
         label: "#ffffff",
       },
       groups: {
         background: "#1A1D23",
 
-        count: "#ac0419",
         label: "#ffffff",
       },
       profile: {
@@ -68,10 +66,7 @@ export const dark = {
         placeholder: "#868a99",
       },
       category_food: {
-        active: "#0D0F12",
-        inactive: "#111317",
-
-        active_title: "#ffffff",
+        inactive: ["#111317", "#111317"],
         inactive_title: "#868a99",
       },
       menu_card: {
@@ -80,7 +75,6 @@ export const dark = {
         title: "#ffffff",
         price: "#faaa31",
 
-        add_button: "#ac0419",
         color_button: "#ffffff",
       },
       button: {
@@ -88,7 +82,7 @@ export const dark = {
         title: "#ffffff",
       },
       linear_button: {
-        background: ["#ac4004", "#ac0419"],
+        background: ["#E76F00", "#EA374E"],
         title: "#ffffff",
       },
       o_auth_button: {
@@ -96,7 +90,6 @@ export const dark = {
         border: "#676567",
       },
       info_card: {
-        background: "#ac0419",
         title: "#ffffff",
       },
       accompaniment_type_card: {
@@ -106,7 +99,6 @@ export const dark = {
         placeholder: "#868a99",
       },
       accompaniment_select_card: {
-        active: "#1A1D23",
         inactive: "#111317",
         border: "#ac0419",
 

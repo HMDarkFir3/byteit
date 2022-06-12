@@ -1,6 +1,6 @@
 import React, { useState, useCallback, FC } from "react";
-import { Alert } from "react-native";
-import { Switch } from "react-native-paper";
+import { Alert, View } from "react-native";
+
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
@@ -19,18 +19,20 @@ import {
 import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
+import { GradientText } from "../../components/GradientText";
 import { SettingsCard } from "../../components/Cards/SettingsCard";
+import { Switch } from "../../components/Switch";
 
 import {
   Container,
   Header,
+  ImageBorder,
   ImageWrapper,
   Image,
   EditButton,
   Username,
   Email,
   Content,
-  Title,
 } from "./styles";
 
 export const Profile: FC = () => {
@@ -72,12 +74,18 @@ export const Profile: FC = () => {
     <Container>
       <StatusBar style={theme.title === "light" ? "dark" : "light"} />
       <Header>
-        <ImageWrapper borderColor={user.user_color}>
-          <Image source={{ uri: user?.image }} />
-        </ImageWrapper>
+        <ImageBorder
+          colors={user.user_color}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <ImageWrapper>
+            <Image source={{ uri: user?.image }} />
+          </ImageWrapper>
+        </ImageBorder>
 
         <EditButton>
-          <NotePencil color={user.user_color} size={32} />
+          <NotePencil color={colors.screens.profile.edit_icon} size={32} />
         </EditButton>
 
         <Username>{user.name}</Username>
@@ -85,13 +93,17 @@ export const Profile: FC = () => {
       </Header>
 
       <Content showsVerticalScrollIndicator={false}>
-        <Title color={user.user_color}>Conteúdo</Title>
+        <GradientText
+          style={{ alignSelf: "flex-start", marginTop: 20 }}
+          title="Conteúdo"
+        />
         <SettingsCard icon={Heart} title="Favoritos" />
         <SettingsCard icon={ClockCounterClockwise} title="Histórico" />
 
-        <Title style={{ marginTop: 20 }} color={user.user_color}>
-          Preferências
-        </Title>
+        <GradientText
+          style={{ alignSelf: "flex-start", marginTop: 20 }}
+          title="Preferências"
+        />
         <SettingsCard icon={Globe} title="idioma" />
         <SettingsCard
           icon={theme.title === "light" ? Sun : Moon}
@@ -103,18 +115,16 @@ export const Profile: FC = () => {
               value={isSwitchTheme}
               onValueChange={handleToggleSwitch}
               thumbColor={user.user_color}
-              trackColor={{
-                true: colors.switch.track_color,
-                false: colors.switch.track_color,
-              }}
+              trackColor={{ true: "#fff", false: "#fff" }}
             />
           )}
         />
         <SettingsCard icon={Archive} title="Acompanhamentos" />
 
-        <Title style={{ marginTop: 20 }} color={user.user_color}>
-          Sair do aplicativo
-        </Title>
+        <GradientText
+          style={{ alignSelf: "flex-start", marginTop: 20 }}
+          title="Sair do Aplicativo"
+        />
         <SettingsCard
           icon={ArrowRight}
           title="Encerrar sessão"

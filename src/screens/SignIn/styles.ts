@@ -1,16 +1,11 @@
 import styled, { css } from "styled-components/native";
 import { ImageBackground } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 
 export const Container = styled.View`
   flex: 1;
 
   background-color: ${({ theme: { colors } }) =>
     colors.screens.sign_in.background};
-`;
-
-export const ContainerImageBackground = styled(ImageBackground)`
-  flex: 1;
 `;
 
 export const LogoWrapper = styled.View`
@@ -94,47 +89,10 @@ export const ForgotPassword = styled.Text`
 `;
 
 export const ButtonContainer = styled.View`
+  align-self: flex-end;
+
   width: 100%;
 
   margin-top: 28px;
-  padding: 0 24px;
-`;
-
-export const ContinueWithWrapper = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-top: 40px;
-  padding: 0 24px;
-`;
-
-export const Divider = styled.View`
-  flex: 1;
-
-  height: 1px;
-
-  background-color: ${({ theme: { colors } }) =>
-    colors.screens.sign_in.divider};
-`;
-
-export const ContinueWithLabel = styled.Text`
-  padding: 0 8px;
-
-  font-size: 14px;
-  line-height: 16px;
-
-  ${({ theme: { colors, fonts } }) => css`
-    font-family: ${fonts.regular};
-    color: ${colors.screens.sign_in.continue_with};
-  `}
-`;
-
-export const OAuthButtonWrapper = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  margin: 40px 0;
-  padding: 0 24px;
+  padding: 0 24px 24px 24px;
 `;

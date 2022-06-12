@@ -1,4 +1,4 @@
-package com.byteit.newarchitecture;
+package com.hmdarkfire.byteit.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.byteit.BuildConfig;
-import com.byteit.newarchitecture.components.MainComponentsRegistry;
-import com.byteit.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.hmdarkfire.byteit.BuildConfig;
+import com.hmdarkfire.byteit.newarchitecture.components.MainComponentsRegistry;
+import com.hmdarkfire.byteit.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

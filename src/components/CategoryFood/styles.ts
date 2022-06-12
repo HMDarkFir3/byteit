@@ -1,9 +1,7 @@
 import styled, { css } from "styled-components/native";
 import { TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
-interface CardProps {
-  isActive: boolean;
-}
 interface TitleProps {
   isActive: boolean;
 }
@@ -15,7 +13,11 @@ export const Container = styled.View`
   margin-right: 24px;
 `;
 
-export const Card = styled(TouchableOpacity)<CardProps>`
+export const Card = styled(TouchableOpacity)`
+  border-radius: 16px;
+`;
+
+export const Gradient = styled(LinearGradient)`
   align-items: center;
   justify-content: center;
 
@@ -23,15 +25,6 @@ export const Card = styled(TouchableOpacity)<CardProps>`
   height: 72px;
 
   border-radius: 16px;
-
-  ${({ theme: { colors }, isActive }) =>
-    isActive
-      ? css`
-          background-color: ${colors.components.category_food.active};
-        `
-      : css`
-          background-color: ${colors.components.category_food.inactive};
-        `}
 `;
 
 export const Title = styled.Text<TitleProps>`

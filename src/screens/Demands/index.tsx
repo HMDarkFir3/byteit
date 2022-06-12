@@ -7,8 +7,9 @@ import * as NavigationBar from "expo-navigation-bar";
 
 import { Skeletons } from "./Skeletons";
 import { Header } from "../../components/Header";
+import { GradientText } from "../../components/GradientText";
 import { DemandCard } from "../../components/Cards/DemandCard";
-import { Button } from "../../components/Buttons/Button";
+import { LinearButton } from "../../components/Buttons/LinearButton";
 
 import { demands } from "../../utils/demands";
 
@@ -17,7 +18,6 @@ import {
   Content,
   Subheader,
   CountDemandWrapper,
-  Count,
   DemandLabel,
   TotalValueDemand,
   ButtonContainer,
@@ -41,7 +41,7 @@ export const Demands: FC = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 5000);
+    }, 1000);
   }, []);
 
   useFocusEffect(
@@ -67,7 +67,8 @@ export const Demands: FC = () => {
 
         <Subheader>
           <CountDemandWrapper>
-            <Count>{activeDemands}</Count>
+            <GradientText title={String(activeDemands)} />
+
             <DemandLabel>Pedidos</DemandLabel>
           </CountDemandWrapper>
 
@@ -84,7 +85,7 @@ export const Demands: FC = () => {
       />
 
       <ButtonContainer>
-        <Button title="Finalizar pedido" />
+        <LinearButton title="Finalizar pedido" />
       </ButtonContainer>
     </Container>
   );

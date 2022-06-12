@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useAuth } from "../../hooks/useAuth";
 
-import { Container, Title, Border, Image } from "./styles";
+import { Container, Title, Button, Border, Image } from "./styles";
 
 interface Props {
   title: string;
@@ -23,13 +23,15 @@ export const Header: FC<Props> = (props) => {
     <Container>
       <Title>{title}</Title>
 
-      <Border
-        activeOpacity={0.7}
-        onPress={handleImage}
-        borderColor={user.user_color}
-      >
-        <Image source={{ uri: user?.image }} />
-      </Border>
+      <Button activeOpacity={0.7} onPress={handleImage}>
+        <Border
+          colors={user.user_color}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Image source={{ uri: user?.image }} />
+        </Border>
+      </Button>
     </Container>
   );
 };

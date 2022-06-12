@@ -8,7 +8,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
 import { LinearButton } from "../../components/Buttons/LinearButton";
-import { OAuthButton } from "../../components/Buttons/OAuthButton";
 
 import {
   Container,
@@ -21,21 +20,13 @@ import {
   Input,
   ForgotPassword,
   ButtonContainer,
-  ContinueWithWrapper,
-  Divider,
-  ContinueWithLabel,
-  OAuthButtonWrapper,
 } from "./styles";
 
 import LogoBlackSVG from "../../assets/logo-black.svg";
 import LogoWhiteSVG from "../../assets/logo-white.svg";
-import GoogleLogoSVG from "../../assets/google.svg";
-import GithubBlackLogoSVG from "../../assets/github-black.svg";
-import GithubWhiteLogoSVG from "../../assets/github-white.svg";
-import SlackLogoSVG from "../../assets/slack.svg";
 
 export const SignIn: FC = () => {
-  const { isLoading, signIn, signInWithGoogle } = useAuth();
+  const { isLoading, signIn } = useAuth();
   const { theme } = useCustomTheme();
   const { colors } = useTheme();
 
@@ -86,6 +77,7 @@ export const SignIn: FC = () => {
               placeholderTextColor={colors.screens.sign_in.placeholder}
               value={email}
               onChangeText={setEmail}
+              keyboardType="email-address"
             />
           </InputWrapper>
 
@@ -114,34 +106,16 @@ export const SignIn: FC = () => {
             </TouchableOpacity>
           </InputWrapper>
         </Form>
-
         <ForgotPassword>Recuperar senha</ForgotPassword>
-
-        <ButtonContainer>
-          <LinearButton
-            title="Iniciar sessão"
-            isLoading={isLoading}
-            onPress={handleSignIn}
-            disabled={isLoading}
-          />
-        </ButtonContainer>
-
-        <ContinueWithWrapper>
-          <Divider />
-          <ContinueWithLabel>Ou continue com</ContinueWithLabel>
-          <Divider />
-        </ContinueWithWrapper>
-
-        <OAuthButtonWrapper>
-          <OAuthButton icon={GoogleLogoSVG} onPress={signInWithGoogle} />
-          <OAuthButton
-            icon={
-              theme.title === "light" ? GithubBlackLogoSVG : GithubWhiteLogoSVG
-            }
-          />
-          <OAuthButton icon={SlackLogoSVG} />
-        </OAuthButtonWrapper>
       </Content>
+      <ButtonContainer>
+        <LinearButton
+          title="Iniciar sessão"
+          isLoading={isLoading}
+          onPress={handleSignIn}
+          disabled={isLoading}
+        />
+      </ButtonContainer>
     </Container>
   );
 };

@@ -1,10 +1,7 @@
 import styled, { css } from "styled-components/native";
 import { TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
-
-interface BorderProps {
-  borderColor: string;
-}
 
 export const Container = styled.View`
   flex-direction: row;
@@ -25,14 +22,14 @@ export const Title = styled.Text`
   `}
 `;
 
-export const Border = styled(TouchableOpacity)<BorderProps>`
+export const Button = styled(TouchableOpacity)``;
+
+export const Border = styled(LinearGradient)`
   align-items: center;
   justify-content: center;
 
   width: 50px;
   height: 50px;
-
-  border: 3px solid ${({ borderColor }) => borderColor};
   border-radius: 25px;
 `;
 
