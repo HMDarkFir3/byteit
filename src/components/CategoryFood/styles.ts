@@ -26,21 +26,3 @@ export const Gradient = styled(LinearGradient)`
 
   border-radius: 16px;
 `;
-
-export const Title = styled.Text<TitleProps>`
-  margin-top: 8px;
-
-  font-size: 16px;
-  line-height: 24px;
-
-  ${({ theme: { colors, fonts }, isActive }) =>
-    isActive
-      ? css`
-          font-family: ${fonts.semi_bold};
-          color: ${colors.components.category_food.active_title};
-        `
-      : css`
-          font-family: ${fonts.regular};
-          color: ${colors.components.category_food.inactive_title};
-        `}
-`;

@@ -1,10 +1,11 @@
 import React, { useState, useCallback, FC } from "react";
-import { FlatList, Alert } from "react-native";
+import { FlatList, Alert, View } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
+import { LinearGradientText } from "react-native-linear-gradient-text";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import { translationFirebaseErrorsPTBR } from "react-translation-firebase-errors";
@@ -19,7 +20,6 @@ import { useCustomTheme } from "../../hooks/useCustomTheme";
 
 import { Skeletons } from "./Skeleton";
 import { Input } from "../../components/Inputs/Input";
-import { GradientText } from "../../components/GradientText";
 import { UserColorButton } from "../../components/Buttons/UserColorButton";
 
 import { userColors } from "../../utils/userColors";
@@ -35,13 +35,14 @@ import {
   Username,
   Email,
   Content,
+  LeftAlignment,
 } from "./styles";
 
 export const UpdateProfile: FC = () => {
   const { user, setUser } = useAuth();
   const { goBack } = useNavigation();
   const { theme } = useCustomTheme();
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
 
   const [name, setName] = useState<string>(user.name);
   const [isActiveUserColor, setIsActiveUserColor] = useState<string[]>(
@@ -156,10 +157,18 @@ export const UpdateProfile: FC = () => {
           onChangeText={setName}
         />
 
-        <GradientText
-          style={{ alignSelf: "flex-start", marginTop: 28 }}
-          title="Cores"
-        />
+        <LeftAlignment>
+          <LinearGradientText
+            colors={user.user_color}
+            text="Cores"
+            textStyle={{
+              alignSelf: "flex-start",
+              marginTop: 28,
+              fontFamily: fonts.semi_bold,
+              fontSize: 20,
+            }}
+          />
+        </LeftAlignment>
 
         <FlatList
           style={{ marginTop: 20 }}

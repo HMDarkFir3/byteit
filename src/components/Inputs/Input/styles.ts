@@ -22,3 +22,7 @@ export const CustomInput = styled(TextInput)`
     color: ${colors.components.input.text};
   `}
 `;
+
+export const LeftAlignment = styled.View`
+  align-self: flex-start;
+`;

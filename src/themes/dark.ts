@@ -36,6 +36,7 @@ export const dark = {
       },
       demands: {
         background: "#1A1D23",
+        background_button: "#0B0C0F",
 
         label: "#ffffff",
       },
@@ -73,7 +74,7 @@ export const dark = {
       },
       category_food: {
         inactive: ["#0B0C0F", "#0B0C0F"],
-        inactive_title: "#868a99",
+        inactive_title: ["#868a99", "#868a99"],
       },
       menu_card: {
         background: "#0B0C0F",
@@ -130,7 +131,7 @@ export const dark = {
         title: "#ffffff",
       },
       input: {
-        background: "#1A1D23",
+        background: "#0B0C0F",
         border: "#414958",
         text: "#ffffff",
         placeholder: "#868a99",
@@ -138,7 +139,7 @@ export const dark = {
     },
 
     navigation_bar: {
-      color: "#1A1D23",
+      color: "#0B0C0F",
       type: "light",
     },
 
@@ -147,7 +148,7 @@ export const dark = {
     },
 
     bottom_tabs: {
-      background: "#1A1D23",
+      background: "#0B0C0F",
 
       active: "#ffffff",
       inactive: "#868a99",

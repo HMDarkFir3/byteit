@@ -2,12 +2,15 @@ import React, { useState, useCallback, FC, useEffect } from "react";
 import { FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
+import { LinearGradientText } from "react-native-linear-gradient-text";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 
+import { useAuth } from "../../hooks/useAuth";
+import { useCustomTheme } from "../../hooks/useCustomTheme";
+
 import { Skeletons } from "./Skeletons";
 import { Header } from "../../components/Header";
-import { GradientText } from "../../components/GradientText";
 import { DemandCard } from "../../components/Cards/DemandCard";
 import { LinearButton } from "../../components/Buttons/LinearButton";
 
@@ -24,7 +27,9 @@ import {
 } from "./styles";
 
 export const Demands: FC = () => {
-  const theme = useTheme();
+  const { user } = useAuth();
+  const { fonts } = useTheme();
+  const { theme } = useCustomTheme();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -67,7 +72,15 @@ export const Demands: FC = () => {
 
         <Subheader>
           <CountDemandWrapper>
-            <GradientText title={String(activeDemands)} />
+            <LinearGradientText
+              colors={user.user_color}
+              text={String(activeDemands)}
+              textStyle={{
+                alignSelf: "flex-start",
+                fontFamily: fonts.semi_bold,
+                fontSize: 20,
+              }}
+            />
 
             <DemandLabel>Pedidos</DemandLabel>
           </CountDemandWrapper>

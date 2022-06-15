@@ -5,6 +5,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
+import { LinearGradientText } from "react-native-linear-gradient-text";
 import {
   NotePencil,
   Heart,
@@ -19,7 +20,6 @@ import {
 import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
-import { GradientText } from "../../components/GradientText";
 import { SettingsCard } from "../../components/Cards/SettingsCard";
 import { Switch } from "../../components/Switch";
 
@@ -33,13 +33,14 @@ import {
   Username,
   Email,
   Content,
+  LeftAlignment,
 } from "./styles";
 
 export const Profile: FC = () => {
   const { user, signOut } = useAuth();
   const { navigate } = useNavigation();
   const { theme, toggleTheme } = useCustomTheme();
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
 
   const [isSwitchTheme, setIsSwitchTheme] = useState<boolean>(false);
 
@@ -98,17 +99,31 @@ export const Profile: FC = () => {
       </Header>
 
       <Content showsVerticalScrollIndicator={false}>
-        <GradientText
-          style={{ alignSelf: "flex-start", marginTop: 20 }}
-          title="Conteúdo"
-        />
+        <LeftAlignment>
+          <LinearGradientText
+            colors={user.user_color}
+            text="Conteúdo"
+            textStyle={{
+              alignSelf: "flex-start",
+              fontFamily: fonts.semi_bold,
+              fontSize: 20,
+            }}
+          />
+        </LeftAlignment>
         <SettingsCard icon={Heart} title="Favoritos" />
         <SettingsCard icon={ClockCounterClockwise} title="Histórico" />
 
-        <GradientText
-          style={{ alignSelf: "flex-start", marginTop: 20 }}
-          title="Preferências"
-        />
+        <LeftAlignment>
+          <LinearGradientText
+            colors={user.user_color}
+            text="Preferências"
+            textStyle={{
+              alignSelf: "flex-start",
+              fontFamily: fonts.semi_bold,
+              fontSize: 20,
+            }}
+          />
+        </LeftAlignment>
         <SettingsCard icon={Globe} title="idioma" />
         <SettingsCard
           icon={theme.title === "light" ? Sun : Moon}
@@ -126,10 +141,17 @@ export const Profile: FC = () => {
         />
         <SettingsCard icon={Archive} title="Acompanhamentos" />
 
-        <GradientText
-          style={{ alignSelf: "flex-start", marginTop: 20 }}
-          title="Sair do Aplicativo"
-        />
+        <LeftAlignment>
+          <LinearGradientText
+            colors={user.user_color}
+            text="Sair do Aplicativo"
+            textStyle={{
+              alignSelf: "flex-start",
+              fontFamily: fonts.semi_bold,
+              fontSize: 20,
+            }}
+          />
+        </LeftAlignment>
         <SettingsCard
           icon={ArrowRight}
           title="Encerrar sessão"

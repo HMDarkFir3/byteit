@@ -10,6 +10,8 @@ import { Demands } from "../screens/Demands";
 import { Groups } from "../screens/Groups";
 import { Profile } from "../screens/Profile";
 
+import { CustomTabBar } from "../components/CustomTabBar";
+
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export const AppTabRoutes: FC = () => {
@@ -18,8 +20,10 @@ export const AppTabRoutes: FC = () => {
 
   return (
     <Navigator
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
         header: () => null,
+
         tabBarStyle: {
           height: 64,
           backgroundColor: colors.bottom_tabs.background,
@@ -33,7 +37,7 @@ export const AppTabRoutes: FC = () => {
           fontFamily: fonts.semi_bold,
           fontSize: 10,
         },
-        tabBarActiveTintColor: user.user_color,
+        tabBarActiveTintColor: colors.bottom_tabs.active,
         tabBarInactiveTintColor: colors.bottom_tabs.inactive,
       }}
     >

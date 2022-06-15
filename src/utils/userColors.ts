@@ -5,18 +5,18 @@ export const userColors = [
   },
   {
     id: "1",
-    colors: ["#9ECC1B", "#094F0C"],
+    colors: ["#9ECC1B", "#28C32E"],
   },
   {
     id: "2",
-    colors: ["#43D6F6", "#023685"],
+    colors: ["#43D6F6", "#266CD6"],
   },
   {
     id: "3",
-    colors: ["#EC1FFF", "#320F7B"],
+    colors: ["#EC1FFF", "#7A4DDB"],
   },
   {
     id: "4",
-    colors: ["#F00933", "#61091E"],
+    colors: ["#CA2D52", "#F00933"],
   },
 ];

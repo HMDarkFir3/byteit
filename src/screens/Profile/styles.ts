@@ -85,3 +85,7 @@ export const Email = styled.Text`
 export const Content = styled.ScrollView`
   margin-top: 28px;
 `;
+
+export const LeftAlignment = styled.View`
+  align-self: flex-start;
+`;

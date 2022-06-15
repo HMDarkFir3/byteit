@@ -54,7 +54,6 @@ export const ButtonContainer = styled.View`
 
   padding: 20px;
 
-  ${({ theme: { colors } }) => css`
-    background-color: ${colors.screens.menu_details.background};
-  `}
+  background-color: ${({ theme: { colors } }) =>
+    colors.screens.demands.background_button};
 `;

@@ -95,3 +95,7 @@ export const Email = styled.Text`
 export const Content = styled.View`
   margin-top: 36px;
 `;
+
+export const LeftAlignment = styled.View`
+  align-self: flex-start;
+`;

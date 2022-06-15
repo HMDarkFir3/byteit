@@ -1,12 +1,11 @@
 import React, { FC } from "react";
 import { TouchableOpacityProps } from "react-native";
 import { useTheme } from "styled-components/native";
+import { LinearGradientText } from "react-native-linear-gradient-text";
 
 import { useAuth } from "../../hooks/useAuth";
 
-import { GradientText } from "../../components/GradientText";
-
-import { Container, Card, Gradient, Title } from "./styles";
+import { Container, Card, Gradient } from "./styles";
 
 interface Props extends TouchableOpacityProps {
   icon: any;
@@ -18,17 +17,21 @@ export const CategoryFood: FC<Props> = (props) => {
   const { icon: Icon, title, isActive, ...rest } = props;
 
   const { user } = useAuth();
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
 
-  const filterColor = isActive
+  const filterCardColor = isActive
     ? user.user_color
     : colors.components.category_food.inactive;
+
+  const filterTitleColor = isActive
+    ? user.user_color
+    : colors.components.category_food.inactive_title;
 
   return (
     <Container>
       <Card activeOpacity={0.7} {...rest}>
         <Gradient
-          colors={filterColor}
+          colors={filterCardColor}
           start={{ x: 0, y: 1 }}
           end={{ x: 1, y: 1 }}
         >
@@ -36,7 +39,17 @@ export const CategoryFood: FC<Props> = (props) => {
         </Gradient>
       </Card>
 
-      <GradientText style={{ marginTop: 8 }} title={title} />
+      <LinearGradientText
+        colors={filterTitleColor}
+        text={title}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 1 }}
+        textStyle={{
+          marginVertical: 8,
+          fontFamily: fonts.semi_bold,
+          fontSize: 14,
+        }}
+      />
     </Container>
   );
 };

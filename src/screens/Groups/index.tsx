@@ -2,12 +2,15 @@ import React, { useState, useCallback, FC, useEffect } from "react";
 import { FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
+import { LinearGradientText } from "react-native-linear-gradient-text";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 
+import { useAuth } from "../../hooks/useAuth";
+import { useCustomTheme } from "../../hooks/useCustomTheme";
+
 import { Skeletons } from "./Skeletons";
 import { Header } from "../../components/Header";
-import { GradientText } from "../../components/GradientText";
 import { GroupCard } from "../../components/Cards/GroupCard";
 
 import { groups } from "../../utils/groups";
@@ -15,7 +18,9 @@ import { groups } from "../../utils/groups";
 import { Container, CountGroupWrapper, GroupLabel } from "./styles";
 
 export const Groups: FC = () => {
-  const theme = useTheme();
+  const { user } = useAuth();
+  const { fonts } = useTheme();
+  const { theme } = useCustomTheme();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -23,7 +28,7 @@ export const Groups: FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(true);
+      setIsLoading(false);
     }, 1000);
   }, []);
 
@@ -47,7 +52,15 @@ export const Groups: FC = () => {
       <Header title="Grupos" />
 
       <CountGroupWrapper>
-        <GradientText title={String(activeGroups)} />
+        <LinearGradientText
+          colors={user.user_color}
+          text={String(activeGroups)}
+          textStyle={{
+            alignSelf: "flex-start",
+            fontFamily: fonts.semi_bold,
+            fontSize: 20,
+          }}
+        />
         <GroupLabel>Grupos ativos</GroupLabel>
       </CountGroupWrapper>
 

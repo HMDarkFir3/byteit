@@ -35,6 +35,7 @@ export const light = {
       },
       demands: {
         background: "#ffffff",
+        background_button: "#f2f4f8",
 
         label: "#2E3243",
       },
@@ -79,7 +80,7 @@ export const light = {
       },
       category_food: {
         inactive: ["#f2f4f8", "#f2f4f8"],
-        inactive_title: "#868a99",
+        inactive_title: ["#868a99", "#868a99"],
       },
       menu_card: {
         background: "#f2f4f8",
@@ -139,12 +140,12 @@ export const light = {
     },
 
     navigation_bar: {
-      color: "#ffffff",
+      color: "#f2f4f8",
       type: "dark",
     },
 
     bottom_tabs: {
-      background: "#ffffff",
+      background: "#f2f4f8",
 
       active: "#ac0419",
       inactive: "#868a99",
