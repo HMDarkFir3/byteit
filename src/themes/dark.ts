@@ -3,31 +3,31 @@ export const dark = {
 
   colors: {
     skeleton: {
-      background: "#1A1D23",
+      background: "#111418",
       card: "#0B0C0F",
     },
 
     screens: {
       sign_in: {
-        background: "#1A1D23",
+        background: "#111418",
 
         title: "#ffffff",
 
         placeholder: "#868A99",
-        input: "rgba(26, 29, 35, 0.3)",
+        input: "#0B0C0F",
         border: "#414958",
         continue_with: "#868A99",
         divider: "#2E3243",
       },
       menu: {
-        background: "#1A1D23",
+        background: "#111418",
 
         title: "#ffffff",
       },
       menu_details: {
         background: "#111418",
         primary: "#1A1D23",
-        header: "#1A1D23",
+        header: ["#E76F00", "#EA374E"],
 
         primary_text: "#ffffff",
         secondary_text: "#ffffff",
@@ -35,26 +35,29 @@ export const dark = {
         placeholder: "#868a99",
       },
       demands: {
-        background: "#1A1D23",
+        background: "#111418",
         background_button: "#0B0C0F",
 
         label: "#ffffff",
+        gradient_label: ["#E76F00", "#EA374E"],
       },
       groups: {
-        background: "#1A1D23",
+        background: "#111418",
 
         label: "#ffffff",
+        gradient_label: ["#E76F00", "#EA374E"],
       },
       profile: {
-        background: "#1A1D23",
+        background: "#111418",
 
         edit_icon: "#ffffff",
 
         title: "#ffffff",
+        gradient_title: ["#E76F00", "#EA374E"],
         placeholder: "#868a99",
       },
       update_profile: {
-        background: "#1A1D23",
+        background: "#111418",
 
         icon: "#ffffff",
 
@@ -73,6 +76,8 @@ export const dark = {
         placeholder: "#868a99",
       },
       category_food: {
+        active: ["#E76F00", "#EA374E"],
+        active_title: ["#E76F00", "#EA374E"],
         inactive: ["#0B0C0F", "#0B0C0F"],
         inactive_title: ["#868a99", "#868a99"],
       },
@@ -82,6 +87,7 @@ export const dark = {
         title: "#ffffff",
         price: "#faaa31",
 
+        add_button: ["#E76F00", "#EA374E"],
         color_button: "#ffffff",
       },
       button: {
@@ -89,11 +95,12 @@ export const dark = {
         title: "#ffffff",
       },
       linear_button: {
-        background: ["#E76F00", "#EA374E"],
         title: "#ffffff",
+        background: ["#E76F00", "#EA374E"],
       },
       info_card: {
         title: "#ffffff",
+        background: ["#E76F00", "#EA374E"],
       },
       accompaniment_type_card: {
         background: "#0B0C0F",
@@ -102,6 +109,7 @@ export const dark = {
         placeholder: "#868a99",
       },
       accompaniment_select_card: {
+        active: ["#E76F00", "#EA374E"],
         inactive: "#0B0C0F",
         border: "#ac0419",
 
@@ -114,7 +122,7 @@ export const dark = {
         title: "#ffffff",
         price: "#faaa31",
         count: "#ffffff",
-        count_button: "#ac0419",
+        background_icon: ["#E76F00", "#EA374E"],
         count_icon: "#ffffff",
 
         border: "#ffffff",
@@ -136,22 +144,22 @@ export const dark = {
         text: "#ffffff",
         placeholder: "#868a99",
       },
+      switch: {
+        active: ["#E76F00", "#EA374E"],
+        inactive: ["#ABB1BA", "#ABB1BA"],
+      },
     },
 
     navigation_bar: {
-      color: "#0B0C0F",
+      color: "#090A0C",
       type: "light",
     },
 
-    switch: {
-      track_color: "#1A1D23",
-    },
-
     bottom_tabs: {
-      background: "#0B0C0F",
+      background: "#090A0C",
 
-      active: "#ffffff",
-      inactive: "#868a99",
+      active: ["#E76F00", "#EA374E"],
+      inactive: ["#ABB1BA", "#ABB1BA"],
     },
   },
 

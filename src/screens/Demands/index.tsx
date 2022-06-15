@@ -6,7 +6,6 @@ import { LinearGradientText } from "react-native-linear-gradient-text";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 
-import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
 import { Skeletons } from "./Skeletons";
@@ -27,8 +26,7 @@ import {
 } from "./styles";
 
 export const Demands: FC = () => {
-  const { user } = useAuth();
-  const { fonts } = useTheme();
+  const { colors, fonts } = useTheme();
   const { theme } = useCustomTheme();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -73,7 +71,7 @@ export const Demands: FC = () => {
         <Subheader>
           <CountDemandWrapper>
             <LinearGradientText
-              colors={user.user_color}
+              colors={colors.screens.demands.gradient_label}
               text={String(activeDemands)}
               textStyle={{
                 alignSelf: "flex-start",

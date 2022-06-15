@@ -26,7 +26,7 @@ export const light = {
       menu_details: {
         background: "#ffffff",
         primary: "#ac0419",
-        header: "#ac0419",
+        header: ["#E76F00", "#EA374E"],
 
         primary_text: "#2E3243",
         secondary_text: "#ffffff",
@@ -38,11 +38,13 @@ export const light = {
         background_button: "#f2f4f8",
 
         label: "#2E3243",
+        gradient_label: ["#E76F00", "#EA374E"],
       },
       groups: {
         background: "#ffffff",
 
         label: "#2E3243",
+        gradient_label: ["#E76F00", "#EA374E"],
       },
       profile: {
         background: "#ffffff",
@@ -50,6 +52,7 @@ export const light = {
         edit_icon: "#ac0419",
 
         title: "#2E3243",
+        gradient_title: ["#E76F00", "#EA374E"],
         placeholder: "#868a99",
       },
       update_profile: {
@@ -77,8 +80,11 @@ export const light = {
       },
       linear_button: {
         title: "#ffffff",
+        background: ["#E76F00", "#EA374E"],
       },
       category_food: {
+        active: ["#E76F00", "#EA374E"],
+        active_title: ["#E76F00", "#EA374E"],
         inactive: ["#f2f4f8", "#f2f4f8"],
         inactive_title: ["#868a99", "#868a99"],
       },
@@ -88,10 +94,12 @@ export const light = {
         title: "#2E3243",
         price: "#faaa31",
 
+        add_button: ["#E76F00", "#EA374E"],
         color_button: "#ffffff",
       },
       info_card: {
         title: "#ffffff",
+        background: ["#E76F00", "#EA374E"],
       },
       accompaniment_type_card: {
         background: "#f2f4f8",
@@ -100,6 +108,7 @@ export const light = {
         placeholder: "#868a99",
       },
       accompaniment_select_card: {
+        active: ["#E76F00", "#EA374E"],
         inactive: "#f2f4f8",
         border: "#ac0419",
 
@@ -112,6 +121,7 @@ export const light = {
         title: "#2E3243",
         price: "#faaa31",
         count: "#2E3243",
+        background_icon: ["#E76F00", "#EA374E"],
         count_icon: "#ffffff",
 
         border: "#D9D9D9",
@@ -133,22 +143,22 @@ export const light = {
         text: "#2E3243",
         placeholder: "#868A99",
       },
-    },
-
-    switch: {
-      track_color: "#f2f4f8",
+      switch: {
+        active: ["#E76F00", "#EA374E"],
+        inactive: ["#ABB1BA", "#ABB1BA"],
+      },
     },
 
     navigation_bar: {
-      color: "#f2f4f8",
+      color: "#ffffff",
       type: "dark",
     },
 
     bottom_tabs: {
-      background: "#f2f4f8",
+      background: "#ffffff",
 
-      active: "#ac0419",
-      inactive: "#868a99",
+      active: ["#E76F00", "#EA374E"],
+      inactive: ["#ABB1BA", "#ABB1BA"],
     },
   },
 

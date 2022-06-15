@@ -42,7 +42,9 @@ export const Profile: FC = () => {
   const { theme, toggleTheme } = useCustomTheme();
   const { colors, fonts } = useTheme();
 
-  const [isSwitchTheme, setIsSwitchTheme] = useState<boolean>(false);
+  const [isSwitchTheme, setIsSwitchTheme] = useState<boolean>(
+    theme.title === "light" ? true : false
+  );
 
   function handleUpdateProfile() {
     navigate("UpdateProfile");
@@ -101,7 +103,7 @@ export const Profile: FC = () => {
       <Content showsVerticalScrollIndicator={false}>
         <LeftAlignment>
           <LinearGradientText
-            colors={user.user_color}
+            colors={colors.screens.profile.gradient_title}
             text="Conteúdo"
             textStyle={{
               alignSelf: "flex-start",
@@ -115,7 +117,7 @@ export const Profile: FC = () => {
 
         <LeftAlignment>
           <LinearGradientText
-            colors={user.user_color}
+            colors={colors.screens.profile.gradient_title}
             text="Preferências"
             textStyle={{
               alignSelf: "flex-start",
@@ -126,15 +128,19 @@ export const Profile: FC = () => {
         </LeftAlignment>
         <SettingsCard icon={Globe} title="idioma" />
         <SettingsCard
-          icon={theme.title === "light" ? Sun : Moon}
-          title={`Tema: ${theme.title === "light" ? "claro" : "escuro"}`}
+          icon={Moon}
+          title="Tema escuro"
           disabled={true}
           hasOptionalElement={true}
           optionalElement={() => (
             <Switch
               value={isSwitchTheme}
               onValueChange={handleToggleSwitch}
-              thumbColor={user.user_color}
+              thumbColor={
+                isSwitchTheme
+                  ? colors.components.switch.inactive
+                  : colors.components.switch.active
+              }
               trackColor={{ true: "#fff", false: "#fff" }}
             />
           )}
@@ -143,7 +149,7 @@ export const Profile: FC = () => {
 
         <LeftAlignment>
           <LinearGradientText
-            colors={user.user_color}
+            colors={colors.screens.profile.gradient_title}
             text="Sair do Aplicativo"
             textStyle={{
               alignSelf: "flex-start",

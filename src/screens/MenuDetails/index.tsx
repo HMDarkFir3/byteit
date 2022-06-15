@@ -23,7 +23,6 @@ import {
 
 import { MenuDTO } from "../../dtos/MenuDTO";
 
-import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
 // import { Skeletons } from "./Skeletons";
@@ -56,7 +55,6 @@ interface Params {
 }
 
 export const MenuDetails: FC = () => {
-  const { user } = useAuth();
   const { goBack } = useNavigation();
   const route = useRoute();
   const { details } = route.params as Params;
@@ -197,7 +195,7 @@ export const MenuDetails: FC = () => {
 
   return (
     <Container
-      colors={user.user_color}
+      colors={colors.screens.menu_details.header}
       start={{ x: 0, y: 1 }}
       end={{ x: 1, y: 1 }}
     >
@@ -205,7 +203,7 @@ export const MenuDetails: FC = () => {
 
       <Header
         style={headerHeightStyle}
-        colors={user.user_color}
+        colors={colors.screens.menu_details.header}
         start={{ x: 0, y: 1 }}
         end={{ x: 1, y: 1 }}
       >

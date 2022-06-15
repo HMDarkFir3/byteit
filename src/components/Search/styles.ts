@@ -11,7 +11,7 @@ export const Container = styled.View`
 
   background-color: ${({ theme: { colors } }) =>
     colors.components.search.background};
-  border-radius: 24px;
+  border-radius: 16px;
 `;
 
 export const Input = styled.TextInput`

@@ -6,7 +6,6 @@ import { LinearGradientText } from "react-native-linear-gradient-text";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 
-import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
 import { Skeletons } from "./Skeletons";
@@ -18,8 +17,7 @@ import { groups } from "../../utils/groups";
 import { Container, CountGroupWrapper, GroupLabel } from "./styles";
 
 export const Groups: FC = () => {
-  const { user } = useAuth();
-  const { fonts } = useTheme();
+  const { colors, fonts } = useTheme();
   const { theme } = useCustomTheme();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -53,7 +51,7 @@ export const Groups: FC = () => {
 
       <CountGroupWrapper>
         <LinearGradientText
-          colors={user.user_color}
+          colors={colors.screens.groups.gradient_label}
           text={String(activeGroups)}
           textStyle={{
             alignSelf: "flex-start",

@@ -3,8 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
 import { Plus } from "phosphor-react-native";
 
-import { useAuth } from "../../../hooks/useAuth";
-
 import { MenuDTO } from "../../../dtos/MenuDTO";
 
 import { Container, Image, Title, Price, Button, Gradient } from "./styles";
@@ -16,7 +14,6 @@ interface Props {
 export const MenuCard: FC<Props> = (props) => {
   const { name, price, image, about, preparing, stars, type } = props.data;
 
-  const { user } = useAuth();
   const { navigate } = useNavigation();
   const { colors } = useTheme();
 
@@ -49,7 +46,7 @@ export const MenuCard: FC<Props> = (props) => {
 
       <Button>
         <Gradient
-          colors={user.user_color}
+          colors={colors.components.menu_card.add_button}
           start={{ x: 0, y: 1 }}
           end={{ x: 1, y: 1 }}
         >

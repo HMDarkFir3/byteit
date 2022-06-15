@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 import { useTheme } from "styled-components/native";
 
-import { useAuth } from "../../../hooks/useAuth";
-
 import { Container, Title } from "./styles";
 
 interface Props {
@@ -13,12 +11,11 @@ interface Props {
 export const InfoCard: FC<Props> = (props) => {
   const { icon: Icon, title } = props;
 
-  const { user } = useAuth();
   const { colors } = useTheme();
 
   return (
     <Container
-      colors={user.user_color}
+      colors={colors.components.info_card.background}
       start={{ x: 0, y: 1 }}
       end={{ x: 1, y: 1 }}
     >

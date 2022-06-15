@@ -20,11 +20,11 @@ export const CategoryFood: FC<Props> = (props) => {
   const { colors, fonts } = useTheme();
 
   const filterCardColor = isActive
-    ? user.user_color
+    ? colors.components.category_food.active
     : colors.components.category_food.inactive;
 
   const filterTitleColor = isActive
-    ? user.user_color
+    ? colors.components.category_food.active_title
     : colors.components.category_food.inactive_title;
 
   return (

@@ -9,7 +9,7 @@ export const Container = styled(LinearGradient)`
   margin-right: 16px;
   padding: 4px 8px;
 
-  border-radius: 16px;
+  border-radius: 8px;
 `;
 
 export const Title = styled.Text`
