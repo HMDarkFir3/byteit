@@ -3,10 +3,6 @@ import { TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
-interface ButtonUserColorsProps {
-  isActive: boolean;
-}
-
 export const Container = styled.View`
   flex: 1;
 
@@ -22,6 +18,8 @@ export const Header = styled.View`
 
   margin-top: ${getStatusBarHeight() + 24}px;
 `;
+
+export const ImageButton = styled(TouchableOpacity)``;
 
 export const ImageBorder = styled(LinearGradient)`
   align-items: center;
@@ -52,6 +50,8 @@ export const Image = styled.Image`
   height: 160px;
 
   border-radius: 92px;
+
+  opacity: 0.25;
 `;
 
 export const CaretLeftButton = styled(TouchableOpacity)`

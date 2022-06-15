@@ -1,15 +1,16 @@
 import React, { useState, useCallback, FC } from "react";
-import { FlatList, Alert, View } from "react-native";
+import { FlatList, Alert } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
+import * as ImagePicker from "expo-image-picker";
 import * as NavigationBar from "expo-navigation-bar";
 import { LinearGradientText } from "react-native-linear-gradient-text";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import { translationFirebaseErrorsPTBR } from "react-translation-firebase-errors";
-import { CaretLeft, Check } from "phosphor-react-native";
+import { CaretLeft, Check, Camera } from "phosphor-react-native";
 
 import { UserDTO } from "../../dtos/UserDTO";
 
@@ -27,6 +28,7 @@ import { userColors } from "../../utils/userColors";
 import {
   Container,
   Header,
+  ImageButton,
   ImageBorder,
   ImageWrapper,
   Image,
@@ -38,12 +40,21 @@ import {
   LeftAlignment,
 } from "./styles";
 
+interface ImagePickerResult {
+  cancelled: boolean;
+  height?: number;
+  type?: string;
+  uri?: string;
+  width?: number;
+}
+
 export const UpdateProfile: FC = () => {
   const { user, setUser } = useAuth();
   const { goBack } = useNavigation();
   const { theme } = useCustomTheme();
   const { colors, fonts } = useTheme();
 
+  const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>(user.name);
   const [isActiveUserColor, setIsActiveUserColor] = useState<string[]>(
     user.user_color
@@ -52,6 +63,23 @@ export const UpdateProfile: FC = () => {
 
   function handleGoBack() {
     goBack();
+  }
+
+  async function handleImagePicker() {
+    const result: ImagePickerResult = await ImagePicker.launchImageLibraryAsync(
+      {
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 4],
+        quality: 1,
+      }
+    );
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
   }
 
   function handleSelectedUserColor(userColor: string[]) {
@@ -78,11 +106,24 @@ export const UpdateProfile: FC = () => {
               const { name, email, has_image, user_color } =
                 profile.data() as UserDTO;
 
-              const reference = storage().ref(
-                `/users/${has_image ? user.uid : "empty_user"}.png`
-              );
+              let reference: any = "";
+              let imageUrl: string = "";
 
-              const imageUrl = await reference.getDownloadURL();
+              if (!!image) {
+                await firestore().collection("users").doc(user.uid).update({
+                  has_image: true,
+                });
+
+                reference = storage().ref(`/users/${user.uid}.png`);
+
+                console.log(reference);
+
+                await reference.putFile(image);
+
+                imageUrl = await reference.getDownloadURL();
+              } else {
+                imageUrl = user.image;
+              }
 
               const data: UserDTO = {
                 uid: user.uid,
@@ -101,6 +142,7 @@ export const UpdateProfile: FC = () => {
           .catch((err) => {
             const error = translationFirebaseErrorsPTBR(err.code);
             Alert.alert(error);
+            console.log(err.code);
           })
           .finally(() => {
             setIsLoading(false);
@@ -126,15 +168,22 @@ export const UpdateProfile: FC = () => {
     <Container>
       <StatusBar style={theme.title === "light" ? "dark" : "light"} />
       <Header>
-        <ImageBorder
-          colors={user.user_color}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <ImageWrapper>
-            <Image source={{ uri: user?.image }} />
-          </ImageWrapper>
-        </ImageBorder>
+        <ImageButton activeOpacity={0.7} onPress={handleImagePicker}>
+          <ImageBorder
+            colors={user.user_color}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <ImageWrapper>
+              <Image source={{ uri: image !== "" ? image : user?.image }} />
+              <Camera
+                style={{ position: "absolute" }}
+                color={colors.screens.update_profile.icon}
+                size={80}
+              />
+            </ImageWrapper>
+          </ImageBorder>
+        </ImageButton>
 
         <CaretLeftButton activeOpacity={0.7} onPress={handleGoBack}>
           <CaretLeft color={colors.screens.update_profile.icon} size={28} />

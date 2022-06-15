@@ -7,9 +7,7 @@
     "scheme": "byteit",
     "version": "1.0.0",
     "sdkVersion": "45.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,11 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ac0419"
-      },
-      "package": "com.hmdarkfire.byteit"
+      }
     },
-    "plugins": [
-      "@react-native-firebase/app"
-    ]
+    "plugins": ["@react-native-firebase/app", "expo-image-picker"]
   }
 }
