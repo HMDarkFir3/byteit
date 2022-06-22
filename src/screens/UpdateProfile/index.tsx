@@ -1,20 +1,12 @@
 import React, { useState, useCallback, FC } from "react";
-import { FlatList, Alert } from "react-native";
+import { FlatList } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import * as ImagePicker from "expo-image-picker";
 import * as NavigationBar from "expo-navigation-bar";
 import { LinearGradientText } from "react-native-linear-gradient-text";
-import firestore from "@react-native-firebase/firestore";
-import storage from "@react-native-firebase/storage";
-import { translationFirebaseErrorsPTBR } from "react-translation-firebase-errors";
 import { CaretLeft, Check, Camera } from "phosphor-react-native";
-
-import { UserDTO } from "../../dtos/UserDTO";
-
-import { COLLECTION_USER } from "../../storages";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
@@ -49,17 +41,19 @@ interface ImagePickerResult {
 }
 
 export const UpdateProfile: FC = () => {
-  const { user, setUser } = useAuth();
+  const { state: authState, dispatch: authDispatch, updateProfile } = useAuth();
   const { goBack } = useNavigation();
   const { theme } = useCustomTheme();
   const { colors, fonts } = useTheme();
 
-  const [image, setImage] = useState<string>("");
-  const [name, setName] = useState<string>(user.name);
-  const [isActiveUserColor, setIsActiveUserColor] = useState<string[]>(
-    user.user_color
+  const [userColor, setUserColor] = useState<string[]>(
+    authState.user.user_color
   );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  function changeUserColor(colors: string[]) {
+    setUserColor(colors);
+    authDispatch({ type: "changeUserColor", payload: colors });
+  }
 
   function handleGoBack() {
     goBack();
@@ -75,79 +69,9 @@ export const UpdateProfile: FC = () => {
       }
     );
 
-    console.log(result);
-
     if (!result.cancelled) {
-      setImage(result.uri);
+      authDispatch({ type: "field", fieldName: "image", payload: result.uri });
     }
-  }
-
-  function handleSelectedUserColor(userColor: string[]) {
-    setIsActiveUserColor(userColor);
-  }
-
-  async function handleSaveProfile() {
-    setIsLoading(true);
-
-    await firestore()
-      .collection("users")
-      .doc(user.uid)
-      .update({
-        name: name,
-        user_color: isActiveUserColor,
-      })
-      .then(async () => {
-        await firestore()
-          .collection("users")
-          .doc(user.uid)
-          .get()
-          .then(async (profile) => {
-            if (profile.exists) {
-              const { name, email, has_image, user_color } =
-                profile.data() as UserDTO;
-
-              let reference: any = "";
-              let imageUrl: string = "";
-
-              if (!!image) {
-                await firestore().collection("users").doc(user.uid).update({
-                  has_image: true,
-                });
-
-                reference = storage().ref(`/users/${user.uid}.png`);
-
-                console.log(reference);
-
-                await reference.putFile(image);
-
-                imageUrl = await reference.getDownloadURL();
-              } else {
-                imageUrl = user.image;
-              }
-
-              const data: UserDTO = {
-                uid: user.uid,
-                name,
-                email,
-                image: imageUrl,
-                user_color,
-              };
-
-              setUser(data);
-
-              await AsyncStorage.removeItem(COLLECTION_USER);
-              await AsyncStorage.setItem(COLLECTION_USER, JSON.stringify(data));
-            }
-          })
-          .catch((err) => {
-            const error = translationFirebaseErrorsPTBR(err.code);
-            Alert.alert(error);
-            console.log(err.code);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
-      });
   }
 
   useFocusEffect(
@@ -160,7 +84,7 @@ export const UpdateProfile: FC = () => {
     }, [theme.title])
   );
 
-  if (isLoading) {
+  if (authState.isLoading) {
     return <Skeletons />;
   }
 
@@ -170,12 +94,19 @@ export const UpdateProfile: FC = () => {
       <Header>
         <ImageButton activeOpacity={0.7} onPress={handleImagePicker}>
           <ImageBorder
-            colors={user.user_color}
+            colors={authState.user.user_color}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 1 }}
           >
             <ImageWrapper>
-              <Image source={{ uri: image !== "" ? image : user?.image }} />
+              <Image
+                source={{
+                  uri:
+                    authState.image !== ""
+                      ? authState.image
+                      : authState.user?.image,
+                }}
+              />
               <Camera
                 style={{ position: "absolute" }}
                 color={colors.screens.update_profile.icon}
@@ -189,12 +120,12 @@ export const UpdateProfile: FC = () => {
           <CaretLeft color={colors.screens.update_profile.icon} size={28} />
         </CaretLeftButton>
 
-        <CheckButton activeOpacity={0.7} onPress={handleSaveProfile}>
+        <CheckButton activeOpacity={0.7} onPress={updateProfile}>
           <Check color={colors.screens.update_profile.icon} size={28} />
         </CheckButton>
 
-        <Username>{user.name}</Username>
-        <Email>{user.email}</Email>
+        <Username>{authState.user.name}</Username>
+        <Email>{authState.user.email}</Email>
       </Header>
 
       <Content>
@@ -202,13 +133,15 @@ export const UpdateProfile: FC = () => {
           label="Nome"
           placeholder="Nome"
           placeholderTextColor={colors.components.input.placeholder}
-          value={name}
-          onChangeText={setName}
+          defaultValue={authState.user.name}
+          onChangeText={(text) =>
+            authDispatch({ type: "field", fieldName: "name", payload: text })
+          }
         />
 
         <LeftAlignment>
           <LinearGradientText
-            colors={user.user_color}
+            colors={authState.user.user_color}
             text="Cores"
             textStyle={{
               alignSelf: "flex-start",
@@ -225,10 +158,10 @@ export const UpdateProfile: FC = () => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <UserColorButton
-              isActive={item.colors[0] === isActiveUserColor[0]}
+              isActive={item.colors[0] === userColor[0]}
               data={item}
-              onPress={() => handleSelectedUserColor(item.colors)}
-              disabled={item.colors[0] === isActiveUserColor[0]}
+              onPress={() => changeUserColor(item.colors)}
+              disabled={item.colors[0] === userColor[0]}
             />
           )}
           horizontal={true}

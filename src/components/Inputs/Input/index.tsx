@@ -14,14 +14,14 @@ interface Props extends TextInputProps {
 export const Input: FC<Props> = (props) => {
   const { label, ...rest } = props;
 
-  const { user } = useAuth();
+  const { state: authState } = useAuth();
   const { fonts } = useTheme();
 
   return (
     <Container>
       <LeftAlignment>
         <LinearGradientText
-          colors={user.user_color}
+          colors={authState.user.user_color}
           text={label}
           textStyle={{
             alignSelf: "flex-start",

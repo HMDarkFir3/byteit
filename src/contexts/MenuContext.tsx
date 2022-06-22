@@ -30,7 +30,7 @@ interface MenuProviderProps {
 export const MenuContext = createContext({} as MenuContextData);
 
 export const MenuProvider: FC<MenuProviderProps> = ({ children }) => {
-  const { user } = useAuth();
+  const { state: authState } = useAuth();
 
   const [plates, setPlates] = useState<MenuDTO[]>([]);
   const [drinks, setDrinks] = useState<MenuDTO[]>([]);
@@ -40,7 +40,7 @@ export const MenuProvider: FC<MenuProviderProps> = ({ children }) => {
     setIsLoading(true);
     setPlates([]);
 
-    if (user.uid) {
+    if (authState.user.uid) {
       await firestore()
         .collection("plates")
         .get()
@@ -73,7 +73,7 @@ export const MenuProvider: FC<MenuProviderProps> = ({ children }) => {
     setIsLoading(true);
     setDrinks([]);
 
-    if (user.uid) {
+    if (authState.user.uid) {
       await firestore()
         .collection("drinks")
         .get()

@@ -12,7 +12,7 @@ interface Props {
 export const Header: FC<Props> = (props) => {
   const { title } = props;
 
-  const { user } = useAuth();
+  const { state: authState } = useAuth();
   const { navigate } = useNavigation();
 
   function handleImage() {
@@ -25,11 +25,11 @@ export const Header: FC<Props> = (props) => {
 
       <Button activeOpacity={0.7} onPress={handleImage}>
         <Border
-          colors={user.user_color}
+          colors={authState.user.user_color}
           start={{ x: 0, y: 1 }}
           end={{ x: 1, y: 1 }}
         >
-          <Image source={{ uri: user?.image }} />
+          <Image source={{ uri: authState.user?.image }} />
         </Border>
       </Button>
     </Container>

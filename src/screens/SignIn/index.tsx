@@ -26,26 +26,24 @@ import LogoBlackSVG from "../../assets/logo-black.svg";
 import LogoWhiteSVG from "../../assets/logo-white.svg";
 
 export const SignIn: FC = () => {
-  const { isLoading, signIn } = useAuth();
+  const { state: authState, dispatch: authDispatch, signIn } = useAuth();
   const { theme } = useCustomTheme();
   const { colors } = useTheme();
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(true);
 
   function handleSignIn() {
-    if (email.trim() === "") {
+    if (authState.email.trim() === "") {
       Alert.alert("Atenção!", "Digite seu e-mail");
       return;
     }
 
-    if (password.trim() === "") {
+    if (authState.password.trim() === "") {
       Alert.alert("Atenção!", "Digite sua senha");
       return;
     }
 
-    signIn(email, password);
+    signIn();
   }
 
   function toggleVisibilityPassword() {
@@ -75,8 +73,14 @@ export const SignIn: FC = () => {
             <Input
               placeholder="Email"
               placeholderTextColor={colors.screens.sign_in.placeholder}
-              value={email}
-              onChangeText={setEmail}
+              value={authState.email}
+              onChangeText={(text) =>
+                authDispatch({
+                  type: "field",
+                  fieldName: "email",
+                  payload: text,
+                })
+              }
               keyboardType="email-address"
             />
           </InputWrapper>
@@ -87,8 +91,14 @@ export const SignIn: FC = () => {
               placeholder="Senha"
               placeholderTextColor={colors.screens.sign_in.placeholder}
               secureTextEntry={isVisiblePassword}
-              value={password}
-              onChangeText={setPassword}
+              value={authState.password}
+              onChangeText={(text) =>
+                authDispatch({
+                  type: "field",
+                  fieldName: "password",
+                  payload: text,
+                })
+              }
             />
 
             <TouchableOpacity
@@ -111,9 +121,9 @@ export const SignIn: FC = () => {
       <ButtonContainer>
         <LinearButton
           title="Iniciar sessão"
-          isLoading={isLoading}
+          isLoading={authState.isLoading}
           onPress={handleSignIn}
-          disabled={isLoading}
+          disabled={authState.isLoading}
         />
       </ButtonContainer>
     </Container>

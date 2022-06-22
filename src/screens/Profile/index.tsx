@@ -37,7 +37,7 @@ import {
 } from "./styles";
 
 export const Profile: FC = () => {
-  const { user, signOut } = useAuth();
+  const { state: authState, signOut } = useAuth();
   const { navigate } = useNavigation();
   const { theme, toggleTheme } = useCustomTheme();
   const { colors, fonts } = useTheme();
@@ -83,12 +83,12 @@ export const Profile: FC = () => {
       <StatusBar style={theme.title === "light" ? "dark" : "light"} />
       <Header>
         <ImageBorder
-          colors={user.user_color}
+          colors={authState.user.user_color}
           start={{ x: 0, y: 1 }}
           end={{ x: 1, y: 1 }}
         >
           <ImageWrapper>
-            <Image source={{ uri: user?.image }} />
+            <Image source={{ uri: authState.user?.image }} />
           </ImageWrapper>
         </ImageBorder>
 
@@ -96,8 +96,8 @@ export const Profile: FC = () => {
           <NotePencil color={colors.screens.profile.edit_icon} size={28} />
         </EditButton>
 
-        <Username>{user.name}</Username>
-        <Email>{user.email}</Email>
+        <Username>{authState.user.name}</Username>
+        <Email>{authState.user.email}</Email>
       </Header>
 
       <Content showsVerticalScrollIndicator={false}>

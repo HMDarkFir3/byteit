@@ -1,103 +1,156 @@
 import React, {
   createContext,
-  useState,
   useEffect,
+  useReducer,
   FC,
   ReactNode,
   Dispatch,
-  SetStateAction,
 } from "react";
-import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import { translationFirebaseErrorsPTBR } from "react-translation-firebase-errors";
 
+import {
+  authReducer,
+  initialState,
+  AuthState,
+  AuthAction,
+} from "../reducers/authReducer";
+
 import { COLLECTION_USER } from "../storages";
 
 import { UserDTO } from "../dtos/UserDTO";
 
 interface AuthContextData {
-  user: UserDTO;
-  setUser: Dispatch<SetStateAction<UserDTO>>;
-  isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
+  state: AuthState;
+  dispatch: Dispatch<AuthAction>;
+  signIn: () => Promise<void>;
   signOut: () => Promise<void>;
+  updateProfile: () => Promise<void>;
 }
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-interface GoogleData {
-  email: string;
-  given_name: string;
-  id: string;
-  locale: string;
-  name: string;
-  picture: string;
-  verified_email: boolean;
-}
-
 export const AuthContext = createContext({} as AuthContextData);
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserDTO | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   async function loadUser() {
-    const storedUser = await AsyncStorage.getItem(COLLECTION_USER);
+    dispatch({ type: "loading" });
 
-    if (storedUser) {
-      const userData = JSON.parse(storedUser) as UserDTO;
+    try {
+      const storedUser = await AsyncStorage.getItem(COLLECTION_USER);
 
-      setUser(userData);
+      if (storedUser) {
+        const userData = JSON.parse(storedUser) as UserDTO;
+
+        dispatch({ type: "success", payload: userData });
+      }
+    } catch (error) {
+      dispatch({ type: "error", payload: "Não há usuário em cache." });
     }
   }
 
-  async function signIn(email: string, password: string) {
-    setIsLoading(true);
+  async function signIn() {
+    dispatch({ type: "loading" });
 
-    await auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(async (account) => {
-        await firestore()
+    try {
+      const account = await auth().signInWithEmailAndPassword(
+        state.email,
+        state.password
+      );
+
+      console.log(account);
+
+      if (account) {
+        const profile = await firestore()
           .collection("users")
           .doc(account.user.uid)
-          .get()
-          .then(async (profile) => {
-            if (profile.exists) {
-              const { name, email, has_image, user_color } =
-                profile.data() as UserDTO;
+          .get();
 
-              const reference = storage().ref(
-                `/users/${has_image ? account.user.uid : "empty_user"}.png`
-              );
+        if (profile.exists) {
+          const { name, email, has_image, user_color } =
+            profile.data() as UserDTO;
 
-              const imageUrl = await reference.getDownloadURL();
+          const reference = storage().ref(
+            `/users/${has_image ? account.user.uid : "empty_user"}.png`
+          );
 
-              const data: UserDTO = {
-                uid: account.user.uid,
-                name,
-                email,
-                image: imageUrl,
-                user_color,
-              };
+          const imageUrl = await reference.getDownloadURL();
 
-              await AsyncStorage.setItem(COLLECTION_USER, JSON.stringify(data));
+          const data = {
+            uid: account.user.uid,
+            name,
+            email,
+            image: imageUrl,
+            user_color,
+          } as UserDTO;
 
-              setUser(data);
-            }
-          });
-      })
-      .catch((err) => {
-        const error = translationFirebaseErrorsPTBR(err.code);
-        Alert.alert(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
+          await AsyncStorage.setItem(COLLECTION_USER, JSON.stringify(data));
+
+          dispatch({ type: "success", payload: data });
+        }
+      }
+    } catch (error) {
+      dispatch({ type: "error", payload: error.code });
+    }
+  }
+
+  async function updateProfile() {
+    dispatch({ type: "loading" });
+
+    try {
+      await firestore().collection("users").doc(state.user.uid).update({
+        name: state.name,
+        user_color: state.user_color,
       });
+
+      const profile = await firestore()
+        .collection("users")
+        .doc(state.user.uid)
+        .get();
+
+      if (profile.exists) {
+        const { name, email, user_color } = profile.data() as UserDTO;
+
+        let reference: any = "";
+        let imageUrl: string = "";
+
+        if (state.image) {
+          await firestore().collection("users").doc(state.user.uid).update({
+            has_image: true,
+          });
+
+          reference = storage().ref(`/users/${state.user.uid}.png`);
+
+          await reference.putFile(state.image);
+
+          imageUrl = await reference.getDownloadURL();
+        } else {
+          imageUrl = state.user.image;
+        }
+
+        const data: UserDTO = {
+          uid: state.user.uid,
+          name,
+          email,
+          image: imageUrl,
+          user_color,
+        };
+
+        await AsyncStorage.removeItem(COLLECTION_USER);
+        await AsyncStorage.setItem(COLLECTION_USER, JSON.stringify(data));
+
+        dispatch({ type: "success", payload: data });
+      }
+    } catch (error) {
+      dispatch({ type: "error", payload: error.code });
+    }
   }
 
   async function signOut() {
@@ -109,7 +162,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     await AsyncStorage.removeItem(COLLECTION_USER);
 
-    setUser(null);
+    dispatch({ type: "signOut" });
   }
 
   useEffect(() => {
@@ -117,7 +170,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, isLoading, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ state, dispatch, signIn, signOut, updateProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );
