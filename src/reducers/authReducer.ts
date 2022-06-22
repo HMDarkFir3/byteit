@@ -51,7 +51,7 @@ export const initialState = {
   image: "",
   name: "",
   user_color: ["", ""],
-  error: "error",
+  error: "",
   isLoading: false,
   isSigned: false,
 };

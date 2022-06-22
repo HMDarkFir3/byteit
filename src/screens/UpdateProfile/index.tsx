@@ -94,7 +94,7 @@ export const UpdateProfile: FC = () => {
       <Header>
         <ImageButton activeOpacity={0.7} onPress={handleImagePicker}>
           <ImageBorder
-            colors={authState.user.user_color}
+            colors={userColor}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 1 }}
           >
@@ -137,11 +137,12 @@ export const UpdateProfile: FC = () => {
           onChangeText={(text) =>
             authDispatch({ type: "field", fieldName: "name", payload: text })
           }
+          userColor={userColor}
         />
 
         <LeftAlignment>
           <LinearGradientText
-            colors={authState.user.user_color}
+            colors={userColor}
             text="Cores"
             textStyle={{
               alignSelf: "flex-start",
