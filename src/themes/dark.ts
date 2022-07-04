@@ -14,10 +14,7 @@ export const dark = {
         title: "#ffffff",
 
         placeholder: "#868A99",
-        input: "#0B0C0F",
-        border: "#414958",
-        continue_with: "#868A99",
-        divider: "#2E3243",
+        forgot_password: ["#E76F00", "#EA374E"],
       },
       menu: {
         background: "#111418",
@@ -137,6 +134,12 @@ export const dark = {
       },
       settings_card: {
         title: "#ffffff",
+      },
+      form_input: {
+        background: "#0B0C0F",
+        border: "#414958",
+        text: "#ffffff",
+        placeholder: "#868A99",
       },
       input: {
         background: "#0B0C0F",

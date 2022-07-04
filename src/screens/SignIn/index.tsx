@@ -1,12 +1,14 @@
 import React, { useState, FC } from "react";
-import { TouchableOpacity, Alert } from "react-native";
+import { TouchableOpacity, Alert, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useTheme } from "styled-components/native";
-import { Envelope, LockOpen, Eye, EyeSlash } from "phosphor-react-native";
+import { LinearGradientText } from "react-native-linear-gradient-text";
+import { EnvelopeSimple, LockOpen, Eye, EyeSlash } from "phosphor-react-native";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useCustomTheme } from "../../hooks/useCustomTheme";
 
+import { FormInput } from "../../components/Inputs/FormInput";
 import { LinearButton } from "../../components/Buttons/LinearButton";
 
 import {
@@ -17,8 +19,6 @@ import {
   Subtitle,
   Form,
   InputWrapper,
-  Input,
-  ForgotPassword,
   ButtonContainer,
 } from "./styles";
 
@@ -28,9 +28,7 @@ import LogoWhiteSVG from "../../assets/logo-white.svg";
 export const SignIn: FC = () => {
   const { state: authState, dispatch: authDispatch, signIn } = useAuth();
   const { theme } = useCustomTheme();
-  const { colors } = useTheme();
-
-  const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(true);
+  const { colors, fonts } = useTheme();
 
   function handleSignIn() {
     if (authState.email.trim() === "") {
@@ -46,33 +44,34 @@ export const SignIn: FC = () => {
     signIn();
   }
 
-  function toggleVisibilityPassword() {
-    setIsVisiblePassword(!isVisiblePassword);
-  }
-
   return (
     <Container>
       <StatusBar style={theme.title === "light" ? "dark" : "light"} />
 
       <LogoWrapper>
         {theme.title === "light" ? (
-          <LogoBlackSVG width={249} height={164} />
+          <LogoBlackSVG width={203} height={133} />
         ) : (
-          <LogoWhiteSVG width={249} height={164} />
+          <LogoWhiteSVG width={203} height={133} />
         )}
       </LogoWrapper>
 
       <Content showsVerticalScrollIndicator={false}>
         <Title>Bem-vindo!</Title>
-        <Subtitle>Conheça melhor app de comandas coletivas!</Subtitle>
+        <Subtitle>
+          Conheça o melhor app de pedidos{`\n`}e comandas totalmente coletivas!
+        </Subtitle>
 
         <Form>
-          <InputWrapper style={{ borderBottomWidth: 0.5 }}>
-            <Envelope color={colors.screens.sign_in.title} size={32} />
-
-            <Input
+          <View style={{ marginBottom: 24 }}>
+            <FormInput
+              icon={() => (
+                <EnvelopeSimple
+                  color={colors.screens.sign_in.title}
+                  size={24}
+                />
+              )}
               placeholder="Email"
-              placeholderTextColor={colors.screens.sign_in.placeholder}
               value={authState.email}
               onChangeText={(text) =>
                 authDispatch({
@@ -83,41 +82,38 @@ export const SignIn: FC = () => {
               }
               keyboardType="email-address"
             />
-          </InputWrapper>
+          </View>
 
-          <InputWrapper style={{ borderTopWidth: 0.5 }}>
-            <LockOpen color={colors.screens.sign_in.title} size={32} />
-            <Input
-              placeholder="Senha"
-              placeholderTextColor={colors.screens.sign_in.placeholder}
-              secureTextEntry={isVisiblePassword}
-              value={authState.password}
-              onChangeText={(text) =>
-                authDispatch({
-                  type: "field",
-                  fieldName: "password",
-                  payload: text,
-                })
-              }
-            />
+          <FormInput
+            icon={() => (
+              <LockOpen color={colors.screens.sign_in.title} size={24} />
+            )}
+            isPassword={true}
+            placeholder="Senha"
+            placeholderTextColor={colors.screens.sign_in.placeholder}
+            value={authState.password}
+            onChangeText={(text) =>
+              authDispatch({
+                type: "field",
+                fieldName: "password",
+                payload: text,
+              })
+            }
+          />
 
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={toggleVisibilityPassword}
-            >
-              {isVisiblePassword ? (
-                <Eye color={colors.screens.sign_in.placeholder} size={32} />
-              ) : (
-                <EyeSlash
-                  color={colors.screens.sign_in.placeholder}
-                  size={32}
-                />
-              )}
-            </TouchableOpacity>
-          </InputWrapper>
+          <LinearGradientText
+            textStyle={{
+              alignSelf: "flex-end",
+              marginTop: 16,
+              fontFamily: fonts.regular,
+              fontSize: 16,
+            }}
+            text="Esqueci minha senha"
+            colors={colors.screens.sign_in.forgot_password}
+          />
         </Form>
-        <ForgotPassword>Recuperar senha</ForgotPassword>
       </Content>
+
       <ButtonContainer>
         <LinearButton
           title="Iniciar sessão"

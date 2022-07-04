@@ -17,17 +17,19 @@ export const Input: FC<Props> = (props) => {
 
   return (
     <Container>
-      <LeftAlignment>
-        <LinearGradientText
-          colors={userColor}
-          text={label}
-          textStyle={{
-            alignSelf: "flex-start",
-            fontFamily: fonts.semi_bold,
-            fontSize: 20,
-          }}
-        />
-      </LeftAlignment>
+      {label && (
+        <LeftAlignment>
+          <LinearGradientText
+            colors={userColor}
+            text={label}
+            textStyle={{
+              alignSelf: "flex-start",
+              fontFamily: fonts.semi_bold,
+              fontSize: 20,
+            }}
+          />
+        </LeftAlignment>
+      )}
       <CustomInput {...rest} />
     </Container>
   );

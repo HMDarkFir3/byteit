@@ -7,11 +7,11 @@ import { AuthRoutes } from "./auth.routes";
 import { AppStackRoutes } from "./app.stack.routes";
 
 export const Routes: FC = () => {
-  const { state: authState } = useAuth();
+  const { state: auth } = useAuth();
 
   return (
     <NavigationContainer>
-      {authState.isSigned ? <AppStackRoutes /> : <AuthRoutes />}
+      {auth.isSigned ? <AppStackRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   );
 };

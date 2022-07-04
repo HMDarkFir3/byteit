@@ -4,20 +4,21 @@ import React, {
   useReducer,
   FC,
   ReactNode,
+  Reducer,
   Dispatch,
 } from "react";
+import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
-import { translationFirebaseErrorsPTBR } from "react-translation-firebase-errors";
 
 import {
   authReducer,
   initialState,
   AuthState,
   AuthAction,
-} from "../reducers/authReducer";
+} from "../reducers/AuthReducer";
 
 import { COLLECTION_USER } from "../storages";
 
@@ -38,10 +39,13 @@ interface AuthProviderProps {
 export const AuthContext = createContext({} as AuthContextData);
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [state, dispatch] = useReducer<Reducer<AuthState, AuthAction>>(
+    authReducer,
+    initialState
+  );
 
   async function loadUser() {
-    dispatch({ type: "loading" });
+    dispatch({ type: "loading", payload: true });
 
     try {
       const storedUser = await AsyncStorage.getItem(COLLECTION_USER);
@@ -54,18 +58,18 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       dispatch({ type: "error", payload: "Não há usuário em cache." });
     }
+
+    dispatch({ type: "loading", payload: false });
   }
 
   async function signIn() {
-    dispatch({ type: "loading" });
+    dispatch({ type: "loading", payload: true });
 
     try {
       const account = await auth().signInWithEmailAndPassword(
         state.email,
         state.password
       );
-
-      console.log(account);
 
       if (account) {
         const profile = await firestore()
@@ -98,11 +102,14 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       }
     } catch (error) {
       dispatch({ type: "error", payload: error.code });
+      Alert.alert("Atencao", state.error);
     }
+
+    dispatch({ type: "loading", payload: false });
   }
 
   async function updateProfile() {
-    dispatch({ type: "loading" });
+    dispatch({ type: "loading", payload: true });
 
     try {
       await firestore().collection("users").doc(state.user.uid).update({
@@ -151,6 +158,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       dispatch({ type: "error", payload: error.code });
     }
+
+    dispatch({ type: "loading", payload: false });
   }
 
   async function signOut() {

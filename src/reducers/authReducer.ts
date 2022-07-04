@@ -29,7 +29,11 @@ export type AuthAction =
       payload: string;
     }
   | {
-      type: "loading" | "signOut";
+      type: "signOut";
+    }
+  | {
+      type: "loading";
+      payload: boolean;
     }
   | {
       type: "success" | "setUser";
@@ -56,45 +60,43 @@ export const initialState = {
   isSigned: false,
 };
 
-function init(initialImage: string, initialUserColor: string[]) {
-  return { image: initialImage, user_color: initialUserColor };
-}
-
 export const authReducer = (state: AuthState, action: AuthAction) => {
   switch (action.type) {
-    case ActionType.Field: {
+    case "field": {
       return { ...state, [action.fieldName]: action.payload };
     }
-    case ActionType.Success: {
+    case "success": {
       return {
         ...state,
+        email: "",
+        password: "",
         user: action.payload,
         isLoading: false,
         isSigned: true,
       };
     }
-    case ActionType.SetUser: {
+    case "setUser": {
       return {
         ...state,
         user: action.payload,
       };
     }
-    case ActionType.SignOut: {
+    case "signOut": {
       return {
         ...state,
         isSigned: false,
       };
     }
-    case ActionType.ChangeUserColor: {
+    case "changeUserColor": {
       return {
         ...state,
         user_color: action.payload,
       };
     }
-    case ActionType.Loading: {
-      return { ...state, isLoading: true };
+    case "loading": {
+      return { ...state, isLoading: action.payload };
     }
-    case ActionType.Error: {
+    case "error": {
       return {
         ...state,
         user: {} as UserDTO,

@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components/native";
-import { ImageBackground } from "react-native";
 
 export const Container = styled.View`
   flex: 1;
@@ -19,8 +18,8 @@ export const Content = styled.ScrollView``;
 
 export const Title = styled.Text`
   text-align: center;
-  font-size: 48px;
-  line-height: 58px;
+  font-size: 36px;
+  line-height: 44px;
 
   ${({ theme: { colors, fonts } }) => css`
     font-family: ${fonts.semi_bold};
@@ -33,21 +32,17 @@ export const Subtitle = styled.Text`
   margin-bottom: 40px;
 
   text-align: center;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 20px;
+  line-height: 24px;
 
   ${({ theme: { colors, fonts } }) => css`
-    font-family: ${fonts.medium};
+    font-family: ${fonts.regular};
     color: ${colors.screens.sign_in.placeholder};
   `}
 `;
 
 export const Form = styled.View`
   margin: 0 24px;
-
-  background-color: ${({ theme: { colors } }) => colors.screens.sign_in.input};
-  border-radius: 16px;
-  border: 1px solid ${({ theme: { colors } }) => colors.screens.sign_in.border};
 `;
 
 export const InputWrapper = styled.View`
@@ -56,22 +51,6 @@ export const InputWrapper = styled.View`
   align-items: center;
 
   padding: 20px 16px;
-
-  border-color: ${({ theme: { colors } }) => colors.screens.sign_in.border};
-`;
-
-export const Input = styled.TextInput`
-  flex: 1;
-
-  padding: 0 16px;
-
-  font-size: 20px;
-  line-height: 24px;
-
-  ${({ theme: { colors, fonts } }) => css`
-    font-family: ${fonts.medium};
-    color: ${colors.screens.sign_in.placeholder};
-  `}
 `;
 
 export const ForgotPassword = styled.Text`
@@ -96,7 +75,7 @@ export const ButtonContainer = styled.View`
   margin-top: 28px;
   padding: 0 24px 24px 24px;
 
-  background-color: ${({ theme: { colors, fonts } }) => css`
+  background-color: ${({ theme: { colors } }) => css`
     background-color: ${colors.screens.sign_in.background};
   `};
 `;

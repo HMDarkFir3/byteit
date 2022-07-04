@@ -13,10 +13,7 @@ export const light = {
         title: "#000000",
 
         placeholder: "#868A99",
-        input: "#f2f4f8",
-        border: "#868A99",
-        continue_with: "#2E3243",
-        divider: "#2E3243",
+        forgot_password: ["#E76F00", "#EA374E"],
       },
       menu: {
         background: "#ffffff",
@@ -136,6 +133,12 @@ export const light = {
       },
       settings_card: {
         title: "#2E3243",
+      },
+      form_input: {
+        background: "#f2f4f8",
+        border: "#868A99",
+        text: "#2E3243",
+        placeholder: "#868A99",
       },
       input: {
         background: "#F2F4F8",
